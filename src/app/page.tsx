@@ -1,65 +1,86 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
+type Item = { id: string; text: string; done: boolean };
+
 export default function Home() {
+  const [items, setItems] = useState<Item[]>([]);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("bring_list");
+      if (raw) setItems(JSON.parse(raw));
+      else
+        setItems([]);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("bring_list", JSON.stringify(items));
+    } catch (e) {
+      /* ignore */
+    }
+  }, [items]);
+
+  function idGen() {
+    return Math.random().toString(36).slice(2, 9);
+  }
+
+  const addItem = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    const v = text.trim();
+    if (!v) return;
+    setItems((s) => [{ id: idGen(), text: v, done: false }, ...s]);
+    setText("");
+  };
+
+  const toggle = (id: string) => setItems((s) => s.map((it) => (it.id === id ? { ...it, done: !it.done } : it)));
+  const remove = (id: string) => setItems((s) => s.filter((it) => it.id !== id));
+  const clearDone = () => setItems((s) => s.filter((it) => !it.done));
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="./next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="app">
+      <div className="card">
+        <Image src="./bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
+        <Image src="./bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
+        <h1>Anne's Forget List</h1>
+        <p className="subtitle">Don't forget these items when coming over!!</p>
+
+        <form className="add-form" onSubmit={addItem}>
+          <input
+            aria-label="Add item"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Add an item (press Enter)"
+          />
+          <button className="add-btn" type="submit">Add</button>
+        </form>
+
+        <ul className="item-list">
+          {items.map((item) => (
+            <li key={item.id} className={`item ${item.done ? "done" : ""}`}>
+              <label className="checkbox">
+                <input type="checkbox" checked={item.done} onChange={() => toggle(item.id)} />
+                <span className="label-text">{item.text}</span>
+              </label>
+              <button className="remove-btn" onClick={() => remove(item.id)} aria-label={`Remove ${item.text}`}>
+                ✕
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="actions">
+          <button className="ghost" onClick={clearDone}>Remove checked</button>
+          <span className="count">{items.filter((i) => !i.done).length} remaining</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="./vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
