@@ -6,39 +6,15 @@ import Image from "next/image";
 type Item = { id: string; text: string; done: boolean };
 
 export default function Home() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [text, setText] = useState("");
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("bring_list");
-      if (raw) setItems(JSON.parse(raw));
-      else
-        setItems([]);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("bring_list", JSON.stringify(items));
-    } catch (e) {
-      /* ignore */
-    }
-  }, [items]);
+  // Define the items here — edit this array in code to change what's shown on the page.
+  const DEFAULT_TEXTS = ["Pillow", "Winter Gloves"];
+  const [items, setItems] = useState<Item[]>(() => DEFAULT_TEXTS.map((t) => ({ id: idGen(), text: t, done: false })));
 
   function idGen() {
     return Math.random().toString(36).slice(2, 9);
   }
 
-  const addItem = (e?: React.FormEvent) => {
-    e?.preventDefault();
-    const v = text.trim();
-    if (!v) return;
-    setItems((s) => [{ id: idGen(), text: v, done: false }, ...s]);
-    setText("");
-  };
+  // Entry box removed per request; items are added via code only
 
   const toggle = (id: string) => setItems((s) => s.map((it) => (it.id === id ? { ...it, done: !it.done } : it)));
   const remove = (id: string) => setItems((s) => s.filter((it) => it.id !== id));
@@ -52,15 +28,7 @@ export default function Home() {
         <h1>Anne's Forget List</h1>
         <p className="subtitle">Don't forget these items when coming over!!</p>
 
-        <form className="add-form" onSubmit={addItem}>
-          <input
-            aria-label="Add item"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Add an item (press Enter)"
-          />
-          <button className="add-btn" type="submit">Add</button>
-        </form>
+        {/* entry form removed - example item added by default */}
 
         <ul className="item-list">
           {items.map((item) => (
