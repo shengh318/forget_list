@@ -3,6 +3,7 @@ import Gallery from "./components/Gallery";
 import { readdir } from "fs/promises";
 import path from "path";
 
+<<<<<<< HEAD
 export default async function Home() {
   const dir = path.join(process.cwd(), "public", "photos");
   let images: string[] = [];
@@ -13,6 +14,17 @@ export default async function Home() {
       .map((n) => `/photos/${n}`);
   } catch {
     images = [];
+=======
+type Item = { id: string; text: string; done: boolean };
+
+export default function Home() {
+  // Define the items here — edit this array in code to change what's shown on the page.
+  const DEFAULT_TEXTS = ["Pillow", "Winter Gloves", "Water Bottle"];
+  const [items, setItems] = useState<Item[]>(() => DEFAULT_TEXTS.map((t) => ({ id: idGen(), text: t, done: false })));
+
+  function idGen() {
+    return Math.random().toString(36).slice(2, 9);
+>>>>>>> 1c28db2894ba291d1dcb8e9359c78a4baf9616c3
   }
 
   const DEFAULT_TEXTS = ["Pillow", "Winter Gloves"];
