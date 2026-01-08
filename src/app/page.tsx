@@ -10,7 +10,7 @@ export default async function Home() {
         const names = await readdir(dir);
         images = names
             .filter((n) => /\.(jpe?g|png|gif|webp|avif|svg)$/i.test(n))
-            .map((n) => `/photos/${n}`);
+            .map((n) => `./photos/${n}`);
     } catch (err) {
         images = [];
     }
@@ -21,8 +21,8 @@ export default async function Home() {
         <main className="app">
             <div className="layout">
                 <div className="card">
-                    <Image src="/bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
-                    <Image src="/bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
+                    <Image src="./bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
+                    <Image src="./bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
                     <h1>Anne's Forget List</h1>
                     <p className="subtitle">Don't forget these items when coming over!!</p>
 
