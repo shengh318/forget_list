@@ -7,7 +7,7 @@ type Item = { id: string; text: string; done: boolean };
 
 export default function Home() {
   // Define the items here — edit this array in code to change what's shown on the page.
-  const DEFAULT_TEXTS = ["Pillow", "Winter Gloves"];
+  const DEFAULT_TEXTS = ["Pillow", "Winter Gloves", "Water Bottle"];
   const [items, setItems] = useState<Item[]>(() => DEFAULT_TEXTS.map((t) => ({ id: idGen(), text: t, done: false })));
 
   function idGen() {
