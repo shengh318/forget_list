@@ -15,7 +15,7 @@ export default async function Home() {
         images = [];
     }
 
-    const DEFAULT_TEXTS = ["Pillow", "Winter Gloves", "Water Bottle"];
+    const DEFAULT_TEXTS = ["Blue Water Bottle"];
 
     return (
         <main className="app">
