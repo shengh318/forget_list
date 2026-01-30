@@ -15,7 +15,7 @@ export default async function Home() {
         images = [];
     }
 
-    const DEFAULT_TEXTS = ["Long Indoor Sweatpants", "Grey Jeans for Depop"];
+    const DEFAULT_TEXTS = ["Pink Sweatpants", "Winter Gloves", "Thigh Highs"];
 
     return (
         <main className="app">
