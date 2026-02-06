@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Gallery from "./components/Gallery";
+import Valentine from "./components/Valentine";
 import { readdir } from "fs/promises";
 import path from "path";
 
@@ -15,7 +16,7 @@ export default async function Home() {
         images = [];
     }
 
-    const DEFAULT_TEXTS = ["Pink Sweatpants", "Winter Gloves", "Thigh Highs"];
+    const DEFAULT_TEXTS = ["Winter Gloves"];
 
     return (
         <main className="app">
@@ -43,7 +44,12 @@ export default async function Home() {
                     </div>
                 </div>
 
+                <div className="valentine">
+                    <Valentine />
+                </div>
+
                 <Gallery paths={images} />
+
             </div>
         </main>
     );
