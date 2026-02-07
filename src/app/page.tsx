@@ -25,7 +25,7 @@ export default async function Home() {
                     <Image src="./bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
                     <Image src="./bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
                     <h1>Anne's Forget List</h1>
-                    <p className="subtitle">Don't forget these items when coming over!!</p>
+                    <p className="subtitle">Don't forget these items when coming over!</p>
 
                     <ul className="item-list">
                         {DEFAULT_TEXTS.map((t, i) => (
