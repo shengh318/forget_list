@@ -147,59 +147,224 @@ export default function Valentine() {
       <div
         style={{
           position: "relative",
-          maxWidth: 520,
+          maxWidth: 560,
           width: "100%",
-          background: "linear-gradient(135deg,#fff0f6,#ffeef6)",
-          borderRadius: 12,
-          boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
-          padding: 20,
+          background: "linear-gradient(180deg,#fff5fb 0%,#ffe8f1 40%, #ffe0ec 100%)",
+          borderRadius: 20,
+          boxShadow: "0 16px 40px rgba(255, 112, 148, 0.25)",
+          padding: 24,
           textAlign: "center",
           transform: state === "accepted" ? "scale(1.02)" : "none",
           transition: "transform 260ms ease",
+          overflow: "hidden",
         }}
       >
         <canvas
           ref={canvasRef}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", borderRadius: 12 }}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", borderRadius: 20 }}
         />
 
-        <h2 style={{ margin: 0, fontSize: 22 }}>Will you be my Valentine?</h2>
-        <p style={{ marginTop: 8, marginBottom: 16, color: "#5b2a3a" }}>Will you be my Valentine? 💌</p>
+        <div
+          style={{
+            position: "absolute",
+            top: 14,
+            left: 18,
+            color: "#ff7aa2",
+            fontSize: 18,
+            fontWeight: 700,
+          }}
+        >
+          🐇💖
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: 22,
+            right: 20,
+            color: "#ff9bb3",
+            fontSize: 16,
+            fontWeight: 700,
+          }}
+        >
+          💞🐰
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+          <div
+            style={{
+              width: 150,
+              height: 150,
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: -30,
+                left: 18,
+                width: 46,
+                height: 86,
+                borderRadius: 40,
+                background: "linear-gradient(180deg,#fff 0%,#ffe3ec 100%)",
+                border: "2px solid #ff9bb3",
+                transform: "rotate(-8deg)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: -30,
+                right: 18,
+                width: 46,
+                height: 86,
+                borderRadius: 40,
+                background: "linear-gradient(180deg,#fff 0%,#ffe3ec 100%)",
+                border: "2px solid #ff9bb3",
+                transform: "rotate(8deg)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 12,
+                borderRadius: 999,
+                background: "white",
+                boxShadow: "0 8px 20px rgba(255, 122, 162, 0.2)",
+                border: "2px solid #ffd1df",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: 48,
+                  left: 38,
+                  width: 16,
+                  height: 16,
+                  borderRadius: 999,
+                  background: "#5b2a3a",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 48,
+                  right: 38,
+                  width: 16,
+                  height: 16,
+                  borderRadius: 999,
+                  background: "#5b2a3a",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 70,
+                  left: "50%",
+                  width: 20,
+                  height: 14,
+                  borderRadius: "50% 50% 60% 60%",
+                  background: "#ff7aa2",
+                  transform: "translateX(-50%)",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 80,
+                  left: 26,
+                  width: 24,
+                  height: 14,
+                  borderRadius: 999,
+                  background: "#ffd1df",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 80,
+                  right: 26,
+                  width: 24,
+                  height: 14,
+                  borderRadius: 999,
+                  background: "#ffd1df",
+                }}
+              />
+            </div>
+          </div>
+
+          <h2 style={{ margin: 0, fontSize: 24, color: "#4a1a2a" }}>Will you be my Valentine, bunny? 💌</h2>
+          <p style={{ marginTop: 4, marginBottom: 16, color: "#5b2a3a" }}>
+            Because to me, you’re the sweetest bunny in the whole garden.
+          </p>
+        </div>
 
         {state === "idle" && (
-          <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button
               onClick={() => setState("accepted")}
-              style={{ background: "#e11", color: "white", border: "none", padding: "10px 16px", borderRadius: 8, cursor: "pointer" }}
+              style={{
+                background: "linear-gradient(135deg,#ff6b9d,#ff2d6f)",
+                color: "white",
+                border: "none",
+                padding: "10px 18px",
+                borderRadius: 999,
+                cursor: "pointer",
+                fontWeight: 700,
+                boxShadow: "0 10px 20px rgba(255,45,111,0.25)",
+              }}
             >
-              Yes, of course ❤️
+              Yes, my bunny ❤️
             </button>
             <button
               onClick={() => setState("declined")}
-              style={{ background: "#ff2d6f", color: "white", border: "none", padding: "10px 16px", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}
+              style={{
+                background: "white",
+                color: "#ff2d6f",
+                border: "2px solid #ff9bb3",
+                padding: "10px 18px",
+                borderRadius: 999,
+                cursor: "pointer",
+                fontWeight: 700,
+              }}
             >
-              Hell yes 💥
+              Hoppy yes! 🐇
             </button>
           </div>
         )}
 
         {state === "accepted" && (
           <div style={{ marginTop: 12 }}>
-            <div style={{ fontSize: 36 }}>🎉❤️🎉</div>
-            <p style={{ marginTop: 8, color: "#4a1a2a" }}>Yayyyyyy!!! My lilly pengy🐧🌹</p>
+            <div style={{ fontSize: 36 }}>🐰💘🐰</div>
+            <p style={{ marginTop: 8, color: "#4a1a2a", fontWeight: 600 }}>
+              I’m over the moon! You’re my forever Valentine, my sweet bunny.
+            </p>
           </div>
         )}
 
         {state === "declined" && (
           <div style={{ marginTop: 6 }}>
-            <p style={{ marginTop: 8, color: "#4a1a2a", fontWeight: 700, fontSize: 18 }}>Ty ty shi ty shi</p>
-            <p style={{ marginTop: 8, color: "#4a1a2a", fontWeight: 700, fontSize: 18 }}>Let's make this day the best Valentines you've had!!🎉❤️🎉</p>
+            <p style={{ marginTop: 8, color: "#4a1a2a", fontWeight: 700, fontSize: 18 }}>
+              No worries, bunny! I’m still bringing extra cuddles.
+            </p>
+            <p style={{ marginTop: 8, color: "#4a1a2a", fontWeight: 700, fontSize: 18 }}>
+              Let’s make this the hopp-iest Valentine’s Day ever!! 🎉❤️🎉
+            </p>
             <div style={{ marginTop: 12, display: 'flex', justifyContent: 'center' }}>
               <button
                 onClick={handleHooray}
-                style={{ background: '#ff2d6f', color: 'white', border: 'none', padding: '10px 18px', borderRadius: 10, cursor: 'pointer', fontWeight: 700, boxShadow: '0 8px 20px rgba(255,45,111,0.18)', transform: 'translateY(2px)'}}
+                style={{
+                  background: '#ff2d6f',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px 18px',
+                  borderRadius: 999,
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  boxShadow: '0 8px 20px rgba(255,45,111,0.18)',
+                  transform: 'translateY(2px)',
+                }}
               >
-                Hooray!
+                Hoppy hooray!
               </button>
             </div>
           </div>
