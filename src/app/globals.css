@@ -137,16 +137,28 @@ body {
   .decor.bunny { right: -18px; top: -18px; width:96px; height:auto; transform: rotate(4deg) scale(0.8); }
 }
 
-/* Two-column layout: left card and right gallery */
-.layout { display:flex; align-items:flex-start; gap:48px; width:100%; max-width:1100px; }
-.layout .card { flex: 0 0 520px; max-width:520px; }
-.layout .valentine {
-  flex-basis: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+/* 2x2 layout:
+   forgetlist | photos
+   valentine  | valentine card */
+.layout {
+  width: 100%;
+  max-width: 1280px;
 }
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: minmax(440px, 520px) minmax(320px, 1fr);
+  grid-template-areas:
+    "forget photos"
+    "ask card";
+  gap: 26px 34px;
+  align-items: start;
+}
+
+.grid-forgetlist { grid-area: forget; }
+.grid-photos { grid-area: photos; }
+.grid-valentine-ask { grid-area: ask; display: flex; justify-content: center; }
+.grid-valentine-card { grid-area: card; display: flex; justify-content: center; }
 
 .love-card-shell {
   width: min(320px, 100%);
@@ -353,10 +365,25 @@ body {
 .minimized-preview { /* removed; minimized UI disabled */ }
 .minimize-btn { /* removed */ }
 
-@media (max-width:880px) {
-  .layout { flex-direction:column; align-items:center; }
-  .layout .card { max-width: 760px; flex: none; }
-  .gallery { width:100%; max-width:760px; }
+@media (max-width:980px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "forget"
+      "photos"
+      "ask"
+      "card";
+    justify-items: center;
+  }
+
+  .grid-forgetlist,
+  .grid-photos,
+  .grid-valentine-ask,
+  .grid-valentine-card {
+    width: 100%;
+    max-width: 760px;
+  }
+
   .thumb-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -373,10 +400,25 @@ body {
 .minimized-preview { /* removed; minimized UI disabled */ }
 .minimize-btn { /* removed */ }
 
-@media (max-width:880px) {
-  .layout { flex-direction:column; align-items:center; }
-  .layout .card { max-width: 760px; flex: none; }
-  .gallery { width:100%; max-width:760px; }
+@media (max-width:980px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "forget"
+      "photos"
+      "ask"
+      "card";
+    justify-items: center;
+  }
+
+  .grid-forgetlist,
+  .grid-photos,
+  .grid-valentine-ask,
+  .grid-valentine-card {
+    width: 100%;
+    max-width: 760px;
+  }
+
   .thumb-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
