@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Gallery from "./components/Gallery";
 import Valentine from "./components/Valentine";
+import Flower from "./components/Flower";
 import { readdir } from "fs/promises";
 import path from "path";
 
@@ -24,8 +25,8 @@ export default async function Home() {
                 <div className="card">
                     <Image src="./bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
                     <Image src="./bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
-                    <h1>Anne's Forget List</h1>
-                    <p className="subtitle">Don't forget these items when coming over!</p>
+                    <h1>Anne&apos;s Forget List</h1>
+                    <p className="subtitle">Don&apos;t forget these items when coming over!</p>
 
                     <ul className="item-list">
                         {DEFAULT_TEXTS.map((t, i) => (
@@ -46,6 +47,7 @@ export default async function Home() {
 
                 <div className="valentine">
                     <Valentine />
+                    <Flower />
                 </div>
 
                 <Gallery paths={images} />
