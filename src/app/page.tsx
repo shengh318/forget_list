@@ -13,7 +13,7 @@ export default async function Home() {
         images = names
             .filter((n) => /\.(jpe?g|png|gif|webp|avif|svg)$/i.test(n))
             .map((n) => `./photos/${n}`);
-    } catch (err) {
+    } catch {
         images = [];
     }
 
