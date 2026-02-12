@@ -153,12 +153,14 @@ body {
     "ask card";
   gap: 26px 34px;
   align-items: start;
+  justify-items: stretch;
 }
+
 
 .grid-forgetlist { grid-area: forget; }
 .grid-photos { grid-area: photos; }
-.grid-valentine-ask { grid-area: ask; display: flex; justify-content: center; }
-.grid-valentine-card { grid-area: card; display: flex; justify-content: center; }
+.grid-valentine-ask { grid-area: ask; display: flex; justify-content: flex-start; }
+.grid-valentine-card { grid-area: card; display: flex; justify-content: flex-start; }
 
 .love-card-shell {
   width: min(320px, 100%);
@@ -384,6 +386,11 @@ body {
     max-width: 760px;
   }
 
+  .grid-valentine-ask,
+  .grid-valentine-card {
+    justify-content: center;
+  }
+
   .thumb-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -417,6 +424,11 @@ body {
   .grid-valentine-card {
     width: 100%;
     max-width: 760px;
+  }
+
+  .grid-valentine-ask,
+  .grid-valentine-card {
+    justify-content: center;
   }
 
   .thumb-grid { grid-template-columns: repeat(4, 1fr); }
