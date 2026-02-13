@@ -7,7 +7,7 @@ type Position = { x: number; y: number };
 const BOARD_WIDTH = 320;
 const BOARD_HEIGHT = 220;
 const TARGET_SIZE = 56;
-const GAME_SECONDS = 20;
+const GAME_SECONDS = 10;
 
 function randomPosition(): Position {
   return {

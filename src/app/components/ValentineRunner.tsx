@@ -18,7 +18,7 @@ const STAR_SIZE = 24;
 const BOMB_SIZE = 26;
 const ARROW_SIZE = 20;
 const SPEED = 9;
-const ROUND_SECONDS = 25;
+const ROUND_SECONDS = 8;
 const GOAL = 24;
 
 function clamp(value: number, min: number, max: number) {
