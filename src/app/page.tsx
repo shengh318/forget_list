@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Gallery from "./components/Gallery";
-import Valentine from "./components/Valentine";
+import ValentineGame from "./components/ValentineGame";
 import Flower from "./components/Flower";
 import { readdir } from "fs/promises";
 import path from "path";
@@ -50,7 +50,7 @@ export default async function Home() {
         </div>
 
         <div className="grid-valentine-ask">
-          <Valentine />
+          <ValentineGame />
         </div>
 
         <div className="grid-valentine-card">
