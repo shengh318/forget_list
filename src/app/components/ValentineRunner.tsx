@@ -16,6 +16,7 @@ const PLAYER_SIZE = 34;
 const HEART_SIZE = 24;
 const STAR_SIZE = 24;
 const BOMB_SIZE = 26;
+const ARROW_SIZE = 20;
 const SPEED = 9;
 const ROUND_SECONDS = 25;
 const GOAL = 24;
@@ -45,6 +46,8 @@ export default function ValentineRunner() {
   const [heart, setHeart] = useState<Point>({ x: 270, y: 130 });
   const [star, setStar] = useState<Point>({ x: 170, y: 50 });
   const [bomb, setBomb] = useState<Point>({ x: 240, y: 210 });
+  const [arrows, setArrows] = useState<Point[]>([]);
+  const [isInvulnerable, setIsInvulnerable] = useState(false);
   const [keys, setKeys] = useState<Keys>({ up: false, left: false, down: false, right: false });
 
   useEffect(() => {
@@ -125,6 +128,23 @@ export default function ValentineRunner() {
           setBomb(randomPos(BOMB_SIZE));
         }
 
+        setArrows((prevArrows) => {
+          const moved = prevArrows
+            .map((arrow) => ({ ...arrow, x: arrow.x - 8 }))
+            .filter((arrow) => arrow.x > -ARROW_SIZE);
+
+          const hitByArrow = moved.some((arrow) => overlaps(next, PLAYER_SIZE, arrow, ARROW_SIZE));
+
+          if (hitByArrow && !isInvulnerable) {
+            setIsInvulnerable(true);
+            setTimeout(() => setIsInvulnerable(false), 900);
+            setScore((prevScore) => Math.max(0, prevScore - 2));
+            setStreak(0);
+          }
+
+          return moved;
+        });
+
         if (overlaps(next, PLAYER_SIZE, heart, HEART_SIZE)) {
           setStreak((prevStreak) => {
             const nextStreak = prevStreak + 1;
@@ -155,7 +175,7 @@ export default function ValentineRunner() {
     }, 28);
 
     return () => clearInterval(movement);
-  }, [running, keys, heart, star, bomb]);
+  }, [running, keys, heart, star, bomb, isInvulnerable]);
 
   useEffect(() => {
     if (!running) return;
@@ -167,6 +187,22 @@ export default function ValentineRunner() {
     return () => clearInterval(shuffler);
   }, [running]);
 
+
+  useEffect(() => {
+    if (!running) return;
+
+    const launcher = setInterval(() => {
+      setArrows((prev) => [
+        ...prev,
+        {
+          x: BOARD.width - ARROW_SIZE,
+          y: Math.floor(Math.random() * (BOARD.height - ARROW_SIZE)),
+        },
+      ]);
+    }, 900);
+
+    return () => clearInterval(launcher);
+  }, [running]);
   const start = () => {
     setRunning(true);
     setTimeLeft(ROUND_SECONDS);
@@ -176,12 +212,14 @@ export default function ValentineRunner() {
     setHeart(randomPos(HEART_SIZE));
     setStar(randomPos(STAR_SIZE));
     setBomb(randomPos(BOMB_SIZE));
+    setArrows([]);
+    setIsInvulnerable(false);
   };
 
   const won = !running && timeLeft === 0 && score >= GOAL;
 
   const status = useMemo(() => {
-    if (running) return "Arrow keys to move. 💖 hearts = +1, 🌟 stars = +5 +3s, 💣 bombs = -3.";
+    if (running) return "Arrow keys to move. Dodge flying arrows! 💖 +1, 🌟 +5/+3s, 💣 -3, 🏹 -2.";
     if (won) return "You win! You are now the Supreme Bunny of Love 💘";
     if (timeLeft === 0) return "Round over! Chase streaks and stars for huge points.";
     return "Press start, then use your arrow keys.";
@@ -206,10 +244,13 @@ export default function ValentineRunner() {
         <div className="runner-heart" style={{ transform: `translate(${heart.x}px, ${heart.y}px)` }}>💖</div>
         <div className="runner-star" style={{ transform: `translate(${star.x}px, ${star.y}px)` }}>🌟</div>
         <div className="runner-bomb" style={{ transform: `translate(${bomb.x}px, ${bomb.y}px)` }}>💣</div>
-        <div className="runner-player" style={{ transform: `translate(${player.x}px, ${player.y}px)` }}>🐰</div>
+        {arrows.map((arrow, index) => (
+          <div key={`arrow-${index}`} className="runner-arrow" style={{ transform: `translate(${arrow.x}px, ${arrow.y}px)` }}>➤</div>
+        ))}
+        <div className={`runner-player ${isInvulnerable ? "runner-player-hit" : ""}`} style={{ transform: `translate(${player.x}px, ${player.y}px)` }}>🐰</div>
       </div>
 
-      <p className="runner-goal">Goal: score {GOAL}+ before time ends. Build a 4+ streak for heart combo bonus.</p>
+      <p className="runner-goal">Goal: score {GOAL}+ before time ends. Build 4+ streaks, grab stars, and dodge arrows.</p>
     </section>
   );
 }

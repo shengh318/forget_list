@@ -660,3 +660,21 @@ body {
   0%, 100% { filter: drop-shadow(0 0 2px rgba(0,0,0,0.2)); }
   50% { filter: drop-shadow(0 0 8px rgba(255, 64, 64, 0.55)); }
 }
+
+.runner-arrow {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  color: #8a2a44;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.runner-player-hit {
+  animation: bunnyHit 0.22s linear infinite;
+}
+
+@keyframes bunnyHit {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
+  50% { opacity: 0.45; filter: drop-shadow(0 0 10px rgba(255, 70, 130, 0.7)); }
+}
