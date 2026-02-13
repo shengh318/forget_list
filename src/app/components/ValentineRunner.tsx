@@ -5,10 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 type Point = { x: number; y: number };
 
 type Keys = {
-  w: boolean;
-  a: boolean;
-  s: boolean;
-  d: boolean;
+  KeyW: boolean;
+  KeyA: boolean;
+  KeyS: boolean;
+  KeyD: boolean;
 };
 
 const BOARD = { width: 360, height: 260 };
@@ -36,19 +36,19 @@ export default function ValentineRunner() {
   const [bestScore, setBestScore] = useState(0);
   const [player, setPlayer] = useState<Point>({ x: 20, y: 110 });
   const [heart, setHeart] = useState<Point>({ x: 270, y: 130 });
-  const [keys, setKeys] = useState<Keys>({ w: false, a: false, s: false, d: false });
+  const [keys, setKeys] = useState<Keys>({ KeyW: false, KeyA: false, KeyS: false, KeyD: false });
 
   useEffect(() => {
     const handleDown = (event: KeyboardEvent) => {
-      const key = event.key.toLowerCase();
-      if (!["w", "a", "s", "d"].includes(key)) return;
+      const key = event.code as keyof Keys;
+      if (!["KeyW", "KeyA", "KeyS", "KeyD"].includes(key)) return;
       event.preventDefault();
       setKeys((prev) => ({ ...prev, [key]: true }));
     };
 
     const handleUp = (event: KeyboardEvent) => {
-      const key = event.key.toLowerCase();
-      if (!["w", "a", "s", "d"].includes(key)) return;
+      const key = event.code as keyof Keys;
+      if (!["KeyW", "KeyA", "KeyS", "KeyD"].includes(key)) return;
       setKeys((prev) => ({ ...prev, [key]: false }));
     };
 
@@ -85,10 +85,10 @@ export default function ValentineRunner() {
         let nextX = prev.x;
         let nextY = prev.y;
 
-        if (keys.w) nextY -= SPEED;
-        if (keys.s) nextY += SPEED;
-        if (keys.a) nextX -= SPEED;
-        if (keys.d) nextX += SPEED;
+        if (keys.KeyW) nextY -= SPEED;
+        if (keys.KeyS) nextY += SPEED;
+        if (keys.KeyA) nextX -= SPEED;
+        if (keys.KeyD) nextX += SPEED;
 
         const next = {
           x: clamp(nextX, 0, BOARD.width - PLAYER_SIZE),
