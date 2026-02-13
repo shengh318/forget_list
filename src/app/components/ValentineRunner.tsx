@@ -5,10 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 type Point = { x: number; y: number };
 
 type Keys = {
-  KeyW: boolean;
-  KeyA: boolean;
-  KeyS: boolean;
-  KeyD: boolean;
+  up: boolean;
+  left: boolean;
+  down: boolean;
+  right: boolean;
 };
 
 const BOARD = { width: 360, height: 260 };
@@ -36,20 +36,35 @@ export default function ValentineRunner() {
   const [bestScore, setBestScore] = useState(0);
   const [player, setPlayer] = useState<Point>({ x: 20, y: 110 });
   const [heart, setHeart] = useState<Point>({ x: 270, y: 130 });
-  const [keys, setKeys] = useState<Keys>({ KeyW: false, KeyA: false, KeyS: false, KeyD: false });
+  const [keys, setKeys] = useState<Keys>({ up: false, left: false, down: false, right: false });
 
   useEffect(() => {
+    const resolveDirection = (event: KeyboardEvent): keyof Keys | null => {
+      const typed = event.key.toLowerCase();
+      if (typed === "w") return "up";
+      if (typed === "a") return "left";
+      if (typed === "s") return "down";
+      if (typed === "d") return "right";
+
+      if (event.code === "KeyW") return "up";
+      if (event.code === "KeyA") return "left";
+      if (event.code === "KeyS") return "down";
+      if (event.code === "KeyD") return "right";
+
+      return null;
+    };
+
     const handleDown = (event: KeyboardEvent) => {
-      const key = event.code as keyof Keys;
-      if (!["KeyW", "KeyA", "KeyS", "KeyD"].includes(key)) return;
+      const direction = resolveDirection(event);
+      if (!direction) return;
       event.preventDefault();
-      setKeys((prev) => ({ ...prev, [key]: true }));
+      setKeys((prev) => ({ ...prev, [direction]: true }));
     };
 
     const handleUp = (event: KeyboardEvent) => {
-      const key = event.code as keyof Keys;
-      if (!["KeyW", "KeyA", "KeyS", "KeyD"].includes(key)) return;
-      setKeys((prev) => ({ ...prev, [key]: false }));
+      const direction = resolveDirection(event);
+      if (!direction) return;
+      setKeys((prev) => ({ ...prev, [direction]: false }));
     };
 
     window.addEventListener("keydown", handleDown);
@@ -85,10 +100,10 @@ export default function ValentineRunner() {
         let nextX = prev.x;
         let nextY = prev.y;
 
-        if (keys.KeyW) nextY -= SPEED;
-        if (keys.KeyS) nextY += SPEED;
-        if (keys.KeyA) nextX -= SPEED;
-        if (keys.KeyD) nextX += SPEED;
+        if (keys.up) nextY -= SPEED;
+        if (keys.down) nextY += SPEED;
+        if (keys.left) nextX -= SPEED;
+        if (keys.right) nextX += SPEED;
 
         const next = {
           x: clamp(nextX, 0, BOARD.width - PLAYER_SIZE),
