@@ -41,15 +41,15 @@ export default function ValentineRunner() {
   useEffect(() => {
     const resolveDirection = (event: KeyboardEvent): keyof Keys | null => {
       const typed = event.key.toLowerCase();
-      if (typed === "w") return "up";
-      if (typed === "a") return "left";
-      if (typed === "s") return "down";
-      if (typed === "d") return "right";
+      if (typed === "arrowup") return "up";
+      if (typed === "arrowleft") return "left";
+      if (typed === "arrowdown") return "down";
+      if (typed === "arrowright") return "right";
 
-      if (event.code === "KeyW") return "up";
-      if (event.code === "KeyA") return "left";
-      if (event.code === "KeyS") return "down";
-      if (event.code === "KeyD") return "right";
+      if (event.code === "ArrowUp") return "up";
+      if (event.code === "ArrowLeft") return "left";
+      if (event.code === "ArrowDown") return "down";
+      if (event.code === "ArrowRight") return "right";
 
       return null;
     };
@@ -141,10 +141,10 @@ export default function ValentineRunner() {
   const won = !running && timeLeft === 0 && score >= GOAL;
 
   const status = useMemo(() => {
-    if (running) return "Use W A S D to move your bunny and collect hearts.";
+    if (running) return "Use ↑ ↓ ← → to move your bunny and collect hearts.";
     if (won) return "You win! Bunny love legend 💝";
     if (timeLeft === 0) return "Round over! Try again and beat your best score.";
-    return "Press start, then use W A S D keys.";
+    return "Press start, then use your arrow keys.";
   }, [running, timeLeft, won]);
 
   return (
