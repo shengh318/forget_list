@@ -351,6 +351,71 @@ body {
   50% { opacity: 1; transform: scale(1.1); }
 }
 
+.flower-sketch-card {
+  width: min(340px, 100%);
+  padding: 18px 14px 14px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 237, 246, 0.95), rgba(255, 216, 234, 0.95));
+  border: 2px solid rgba(255, 147, 186, 0.55);
+  box-shadow: 0 14px 30px rgba(255, 101, 154, 0.24);
+}
+
+.flower-sketch {
+  display: block;
+  width: min(240px, 100%);
+  margin: 0 auto;
+}
+
+.draw {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 5.5s ease forwards infinite;
+}
+
+.draw-stem,
+.draw-leaf {
+  stroke: #35a45f;
+}
+
+.draw-petal,
+.draw-center {
+  stroke: #ff4b8c;
+}
+
+.draw-center {
+  fill: rgba(255, 145, 184, 0.2);
+  stroke-width: 3;
+}
+
+.draw-leaf:nth-of-type(2) { animation-delay: 0.45s; }
+.draw-leaf:nth-of-type(3) { animation-delay: 0.75s; }
+.draw-petal:nth-of-type(4) { animation-delay: 1.2s; }
+.draw-petal:nth-of-type(5) { animation-delay: 1.55s; }
+.draw-petal:nth-of-type(6) { animation-delay: 1.9s; }
+.draw-petal:nth-of-type(7) { animation-delay: 2.25s; }
+.draw-center { animation-delay: 2.7s; }
+
+.flower-sketch-note {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #8a1f4c;
+  text-transform: lowercase;
+}
+
+@keyframes drawLine {
+  0% { stroke-dashoffset: 1000; opacity: 0; }
+  12% { opacity: 1; }
+  45%, 80% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.9; }
+}
+
+
 .gallery { flex: 0 0 auto; width: max-content; align-self: flex-start; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border-radius:12px; padding:12px; border: none; }
 .gallery h2 { margin:0 0 8px 0; font-size:18px; }
 .thumb-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
