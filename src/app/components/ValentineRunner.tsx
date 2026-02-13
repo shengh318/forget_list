@@ -14,19 +14,25 @@ type Keys = {
 const BOARD = { width: 360, height: 260 };
 const PLAYER_SIZE = 34;
 const HEART_SIZE = 24;
+const STAR_SIZE = 24;
+const BOMB_SIZE = 26;
 const SPEED = 9;
 const ROUND_SECONDS = 25;
-const GOAL = 12;
+const GOAL = 24;
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
-function randomHeart(): Point {
+function randomPos(size: number): Point {
   return {
-    x: Math.floor(Math.random() * (BOARD.width - HEART_SIZE)),
-    y: Math.floor(Math.random() * (BOARD.height - HEART_SIZE)),
+    x: Math.floor(Math.random() * (BOARD.width - size)),
+    y: Math.floor(Math.random() * (BOARD.height - size)),
   };
+}
+
+function overlaps(a: Point, aw: number, b: Point, bw: number) {
+  return a.x < b.x + bw && a.x + aw > b.x && a.y < b.y + bw && a.y + aw > b.y;
 }
 
 export default function ValentineRunner() {
@@ -34,8 +40,11 @@ export default function ValentineRunner() {
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [player, setPlayer] = useState<Point>({ x: 20, y: 110 });
   const [heart, setHeart] = useState<Point>({ x: 270, y: 130 });
+  const [star, setStar] = useState<Point>({ x: 170, y: 50 });
+  const [bomb, setBomb] = useState<Point>({ x: 240, y: 210 });
   const [keys, setKeys] = useState<Keys>({ up: false, left: false, down: false, right: false });
 
   useEffect(() => {
@@ -110,16 +119,35 @@ export default function ValentineRunner() {
           y: clamp(nextY, 0, BOARD.height - PLAYER_SIZE),
         };
 
-        const hitX = next.x < heart.x + HEART_SIZE && next.x + PLAYER_SIZE > heart.x;
-        const hitY = next.y < heart.y + HEART_SIZE && next.y + PLAYER_SIZE > heart.y;
+        if (overlaps(next, PLAYER_SIZE, bomb, BOMB_SIZE)) {
+          setScore((prevScore) => Math.max(0, prevScore - 3));
+          setStreak(0);
+          setBomb(randomPos(BOMB_SIZE));
+        }
 
-        if (hitX && hitY) {
+        if (overlaps(next, PLAYER_SIZE, heart, HEART_SIZE)) {
+          setStreak((prevStreak) => {
+            const nextStreak = prevStreak + 1;
+            const bonus = nextStreak >= 4 ? 2 : 1;
+            setScore((prevScore) => {
+              const updated = prevScore + bonus;
+              setBestScore((best) => Math.max(best, updated));
+              return updated;
+            });
+            return nextStreak;
+          });
+          setHeart(randomPos(HEART_SIZE));
+        }
+
+        if (overlaps(next, PLAYER_SIZE, star, STAR_SIZE)) {
           setScore((prevScore) => {
-            const updated = prevScore + 1;
+            const updated = prevScore + 5;
             setBestScore((best) => Math.max(best, updated));
             return updated;
           });
-          setHeart(randomHeart());
+          setStreak(0);
+          setStar(randomPos(STAR_SIZE));
+          setTimeLeft((prev) => Math.min(ROUND_SECONDS + 8, prev + 3));
         }
 
         return next;
@@ -127,30 +155,42 @@ export default function ValentineRunner() {
     }, 28);
 
     return () => clearInterval(movement);
-  }, [running, keys, heart.x, heart.y]);
+  }, [running, keys, heart, star, bomb]);
 
+  useEffect(() => {
+    if (!running) return;
+    const shuffler = setInterval(() => {
+      setHeart(randomPos(HEART_SIZE));
+      setBomb(randomPos(BOMB_SIZE));
+    }, 2200);
+
+    return () => clearInterval(shuffler);
+  }, [running]);
 
   const start = () => {
     setRunning(true);
     setTimeLeft(ROUND_SECONDS);
     setScore(0);
+    setStreak(0);
     setPlayer({ x: 20, y: 110 });
-    setHeart(randomHeart());
+    setHeart(randomPos(HEART_SIZE));
+    setStar(randomPos(STAR_SIZE));
+    setBomb(randomPos(BOMB_SIZE));
   };
 
   const won = !running && timeLeft === 0 && score >= GOAL;
 
   const status = useMemo(() => {
-    if (running) return "Use ↑ ↓ ← → to move your bunny and collect hearts.";
-    if (won) return "You win! Bunny love legend 💝";
-    if (timeLeft === 0) return "Round over! Try again and beat your best score.";
+    if (running) return "Arrow keys to move. 💖 hearts = +1, 🌟 stars = +5 +3s, 💣 bombs = -3.";
+    if (won) return "You win! You are now the Supreme Bunny of Love 💘";
+    if (timeLeft === 0) return "Round over! Chase streaks and stars for huge points.";
     return "Press start, then use your arrow keys.";
   }, [running, timeLeft, won]);
 
   return (
-    <section className="runner" aria-label="WASD valentine game">
+    <section className="runner" aria-label="Arrow key valentine game">
       <div className="runner-head">
-        <h3>🐇 Heart Dash</h3>
+        <h3>🐇 Heart Dash Deluxe</h3>
         <button className="runner-btn" onClick={start}>{running ? "Restart" : "Start"}</button>
       </div>
 
@@ -159,18 +199,17 @@ export default function ValentineRunner() {
         <span>Score: {score}</span>
         <span>Best: {bestScore}</span>
         <span>Time: {timeLeft}s</span>
+        <span>Streak: {streak}</span>
       </div>
 
-      <div className="runner-board" role="application" aria-label="Game board controlled by keyboard">
-        <div className="runner-heart" style={{ transform: `translate(${heart.x}px, ${heart.y}px)` }}>
-          💖
-        </div>
-        <div className="runner-player" style={{ transform: `translate(${player.x}px, ${player.y}px)` }}>
-          🐰
-        </div>
+      <div className="runner-board" role="application" aria-label="Game board controlled by keyboard arrow keys">
+        <div className="runner-heart" style={{ transform: `translate(${heart.x}px, ${heart.y}px)` }}>💖</div>
+        <div className="runner-star" style={{ transform: `translate(${star.x}px, ${star.y}px)` }}>🌟</div>
+        <div className="runner-bomb" style={{ transform: `translate(${bomb.x}px, ${bomb.y}px)` }}>💣</div>
+        <div className="runner-player" style={{ transform: `translate(${player.x}px, ${player.y}px)` }}>🐰</div>
       </div>
 
-      <p className="runner-goal">Goal: collect {GOAL} hearts in {ROUND_SECONDS} seconds.</p>
+      <p className="runner-goal">Goal: score {GOAL}+ before time ends. Build a 4+ streak for heart combo bonus.</p>
     </section>
   );
 }
