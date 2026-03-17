@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <main className="app">
       <div className="layout layout-grid">
-        <div className="card grid-forgetlist">
+        <div className="card uniform-tile grid-forgetlist">
           <Image src="./bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
           <Image src="./bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
           <h1>Anne&apos;s Forget List</h1>
@@ -47,22 +47,22 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="grid-photos">
+        <div className="uniform-tile grid-photos">
           <Gallery paths={images} />
         </div>
 
-        <div className="grid-valentine-ask">
+        <div className="uniform-tile grid-valentine-ask">
           <Valentine />
         </div>
 
-        <div className="grid-valentine-card">
+        <div className="uniform-tile grid-valentine-card">
           <Flower />
         </div>
 
-        <div className="grid-valentine-game">
+        <div className="uniform-tile grid-valentine-game">
           <ValentineRunner />
         </div>
-        <div className="grid-birthday">
+        <div className="uniform-tile grid-birthday">
           <HappyBirthday />
         </div>
       </div>

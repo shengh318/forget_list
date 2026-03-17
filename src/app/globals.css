@@ -781,3 +781,120 @@ body {
   0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
   50% { transform: translateX(-50%) scale(0.86, 1.1); opacity: 0.9; }
 }
+
+/* Unified sizing + mobile scroll organization */
+:root {
+  --tile-width: min(540px, 100%);
+  --tile-min-height: 430px;
+}
+
+.layout-grid {
+  grid-template-columns: repeat(2, minmax(0, var(--tile-width)));
+  grid-template-areas:
+    "forget photos"
+    "ask card"
+    "game game"
+    "birthday birthday";
+  justify-content: center;
+  align-items: stretch;
+}
+
+.uniform-tile {
+  width: 100%;
+  min-height: var(--tile-min-height);
+  display: flex;
+}
+
+.grid-forgetlist,
+.grid-photos,
+.grid-valentine-ask,
+.grid-valentine-card,
+.grid-valentine-game,
+.grid-birthday {
+  width: 100%;
+  align-self: stretch;
+}
+
+.grid-forgetlist,
+.grid-photos,
+.grid-valentine-ask,
+.grid-valentine-card,
+.grid-valentine-game,
+.grid-birthday {
+  justify-content: center;
+}
+
+.grid-forgetlist .card,
+.grid-photos .gallery,
+.grid-valentine-ask .val-game,
+.grid-valentine-card .love-card-shell,
+.grid-valentine-game .runner,
+.grid-birthday .birthday-card {
+  width: 100%;
+  max-width: none;
+}
+
+.grid-forgetlist .card,
+.grid-photos .gallery,
+.grid-valentine-ask .val-game,
+.grid-valentine-game .runner,
+.grid-birthday .birthday-card {
+  min-height: var(--tile-min-height);
+}
+
+.grid-valentine-card .love-card-shell {
+  min-height: var(--tile-min-height);
+  display: flex;
+}
+
+.grid-valentine-card .love-card {
+  width: 100%;
+  min-height: var(--tile-min-height);
+}
+
+@media (max-width: 980px) {
+  body {
+    padding: 20px 14px;
+  }
+
+  .app {
+    align-items: flex-start;
+  }
+
+  .layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "forget"
+      "photos"
+      "ask"
+      "card"
+      "game"
+      "birthday";
+    gap: 18px;
+  }
+
+  .uniform-tile {
+    min-height: 360px;
+  }
+
+  .grid-forgetlist .card,
+  .grid-photos .gallery,
+  .grid-valentine-ask .val-game,
+  .grid-valentine-game .runner,
+  .grid-birthday .birthday-card,
+  .grid-valentine-card .love-card,
+  .grid-valentine-card .love-card-shell {
+    min-height: 360px;
+  }
+}
+
+.grid-forgetlist.card {
+  max-width: none;
+  min-height: var(--tile-min-height);
+}
+
+@media (max-width: 980px) {
+  .grid-forgetlist.card {
+    min-height: 360px;
+  }
+}
