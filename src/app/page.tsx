@@ -3,6 +3,7 @@ import Gallery from "./components/Gallery";
 import Valentine from "./components/Valentine";
 import ValentineRunner from "./components/ValentineRunner";
 import Flower from "./components/Flower";
+import HappyBirthday from "./components/HappyBirthday";
 import { readdir } from "fs/promises";
 import path from "path";
 
@@ -60,6 +61,9 @@ export default async function Home() {
 
         <div className="grid-valentine-game">
           <ValentineRunner />
+        </div>
+        <div className="grid-birthday">
+          <HappyBirthday />
         </div>
       </div>
     </main>
