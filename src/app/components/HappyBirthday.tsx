@@ -8,7 +8,7 @@ export default function HappyBirthday() {
         <span>💜</span>
       </div>
 
-      <h2>Happy Birthday!!!</h2>
+      <h2>Happy Birthday Anne!!!</h2>
       <p>
         Happy Birthday to my favorite girl / korean / twitch streamer / league player /
         brainrotter. Here&apos;s to your past year and more!
