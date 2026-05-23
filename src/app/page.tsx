@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Gallery from "./components/Gallery";
 import Valentine from "./components/Valentine";
 import ValentineRunner from "./components/ValentineRunner";
 import Flower from "./components/Flower";
 import HappyBirthday from "./components/HappyBirthday";
+import ForgetList from "./components/ForgetList";
 import { readdir } from "fs/promises";
 import path from "path";
 
@@ -19,33 +19,17 @@ export default async function Home() {
     images = [];
   }
 
-  const DEFAULT_TEXTS = ["Winter Gloves"];
-
   return (
     <main className="app">
+      <header className="hero">
+        <h1>
+          Sheng <span className="ampersand">&amp;</span> Anne
+        </h1>
+        <p>our little corner on the web ✦</p>
+      </header>
+
       <div className="layout layout-grid">
-        <div className="card uniform-tile grid-forgetlist">
-          <Image src="./bear.png" alt="bear" width={250} height={180} className="decor bear" priority />
-          <Image src="./bunny.png" alt="bunny" width={140} height={140} className="decor bunny" priority />
-          <h1>Anne&apos;s Forget List</h1>
-          <p className="subtitle">Don&apos;t forget these items when coming over!</p>
-
-          <ul className="item-list">
-            {DEFAULT_TEXTS.map((t, i) => (
-              <li key={i} className="item">
-                <label className="checkbox">
-                  <input type="checkbox" defaultChecked={false} />
-                  <span className="label-text">{t}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-
-          <div className="actions">
-            <button className="ghost">Remove checked</button>
-            <span className="count">{DEFAULT_TEXTS.length} remaining</span>
-          </div>
-        </div>
+        <ForgetList />
 
         <div className="uniform-tile grid-photos">
           <Gallery paths={images} />

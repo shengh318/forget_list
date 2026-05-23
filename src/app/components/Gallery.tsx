@@ -1,12 +1,30 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 
 type Props = { paths?: string[] };
 
+const ROTATIONS = ["-2deg", "1.5deg", "-1deg", "2.5deg", "0deg", "-1.5deg", "2deg", "-0.5deg"];
+
+type Size = "sm" | "md" | "lg";
+
+const LAYOUTS: [Size[], Size[]][] = [
+  [["lg"], ["sm", "sm", "sm"]],
+  [["sm", "sm", "sm"], ["md", "md"]],
+  [["md", "sm"], ["lg"]],
+  [["sm", "sm"], ["sm", "sm", "sm"]],
+  [["lg"], ["lg"]],
+  [["md", "md"], ["sm", "sm"]],
+];
+
+const SIZE_MAP: Record<Size, { w: number; h: number }> = {
+  sm: { w: 90, h: 70 },
+  md: { w: 130, h: 95 },
+  lg: { w: 180, h: 130 },
+};
+
 export default function Gallery({ paths }: Props) {
-  // Use passed-in paths if provided; otherwise fetch /api/photos on mount
   const [images, setImages] = useState<string[]>(paths && paths.length > 0 ? paths : []);
 
   useEffect(() => {
@@ -18,42 +36,151 @@ export default function Gallery({ paths }: Props) {
         if (!mounted) return;
         if (Array.isArray(data.paths)) setImages(data.paths);
       })
-      .catch(() => {
-        /* keep empty on error */
-      });
-    return () => {
-      mounted = false;
-    };
+      .catch(() => {});
+    return () => { mounted = false; };
   }, [paths]);
 
+  const [page, setPage] = useState(0);
   const [active, setActive] = useState<string | null>(null);
+  const [activeIdx, setActiveIdx] = useState(-1);
 
-  const open = (p: string) => setActive(p);
-  const close = () => setActive(null);
+  const photosPerSpread = 4;
+  const totalPages = Math.max(1, Math.ceil(images.length / photosPerSpread));
+
+  const goForward = useCallback(() => {
+    setPage((p) => Math.min(p + 1, totalPages - 1));
+  }, [totalPages]);
+
+  const goBackward = useCallback(() => {
+    setPage((p) => Math.max(p - 1, 0));
+  }, []);
+
+  const openLightbox = useCallback((globalIdx: number) => {
+    setActive(images[globalIdx]);
+    setActiveIdx(globalIdx);
+  }, [images]);
+
+  const closeLightbox = useCallback(() => {
+    setActive(null);
+    setActiveIdx(-1);
+  }, []);
+
+  const prevPhoto = useCallback(() => {
+    setActiveIdx((i) => {
+      if (i <= 0) return i;
+      const next = i - 1;
+      setActive(images[next]);
+      return next;
+    });
+  }, [images]);
+
+  const nextPhoto = useCallback(() => {
+    setActiveIdx((i) => {
+      if (i >= images.length - 1) return i;
+      const next = i + 1;
+      setActive(images[next]);
+      return next;
+    });
+  }, [images]);
+
+  useEffect(() => {
+    if (!active) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevPhoto();
+      if (e.key === "ArrowRight") nextPhoto();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [active, closeLightbox, prevPhoto, nextPhoto]);
+
+  const startIdx = page * photosPerSpread;
+  const layout = LAYOUTS[page % LAYOUTS.length];
+  let photoIdx = 0;
+
+  const renderPolaroid = (globalIdx: number, size: Size, rotIdx: number) => {
+    if (globalIdx >= images.length) return null;
+    const { w, h } = SIZE_MAP[size];
+    const rot = ROTATIONS[rotIdx % ROTATIONS.length];
+    return (
+      <button
+        className={`polaroid polaroid-${size}`}
+        style={{ transform: `rotate(${rot})` }}
+        onClick={() => openLightbox(globalIdx)}
+        aria-label={`Open photo ${globalIdx + 1}`}
+      >
+        <span className="polaroid-img-wrap" style={{ width: w, height: h }}>
+          <Image src={images[globalIdx]} alt="" width={w} height={h} className="polaroid-img" />
+        </span>
+        <span className="polaroid-caption">{globalIdx + 1}</span>
+      </button>
+    );
+  };
 
   return (
     <div className="gallery">
-      <h2>Photos</h2>
-      <div className="thumb-grid">
-        {images.map((p) => (
-          <button key={p} className="thumb" onClick={() => open(p)} aria-label={`Open ${p}`}>
-            <Image src={p} alt={p} width={80} height={80} style={{ objectFit: "cover", borderRadius: 8 }} />
-          </button>
-        ))}
+      <div className="gallery-header">
+        <h2>
+          <span className="gallery-icon">📸</span> Our Album
+        </h2>
+        <span className="gallery-count">{images.length} photos</span>
       </div>
 
-      {active && (
-        <div className="lightbox-overlay" onClick={close} role="dialog" aria-modal="true">
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={close} aria-label="Close">✕</button>
-            <Image src={active} alt={active} width={900} height={600} className="lightbox-img" />
-            <div className="lightbox-actions">
-              {/* reserved for future actions */}
+      {images.length === 0 ? (
+        <div className="gallery-empty">
+          <span className="gallery-empty-icon">🖼️</span>
+          <p>No photos yet — adding some soon!</p>
+        </div>
+      ) : (
+        <div className="album" key={page}>
+          <div className="album-spread album-enter">
+            <div className="album-side album-side-left">
+              <div className="album-side-inner">
+                {layout[0].map((size, i) => {
+                  const el = renderPolaroid(startIdx + photoIdx, size, photoIdx);
+                  photoIdx++;
+                  return <div key={i} className="polaroid-cell">{el}</div>;
+                })}
+              </div>
+            </div>
+            <div className="album-divider" />
+            <div className="album-side album-side-right">
+              <div className="album-side-inner">
+                {layout[1].map((size, i) => {
+                  const el = renderPolaroid(startIdx + photoIdx, size, photoIdx);
+                  photoIdx++;
+                  return <div key={i} className="polaroid-cell">{el}</div>;
+                })}
+              </div>
             </div>
           </div>
         </div>
       )}
-      
+
+      {images.length > 0 && (
+        <div className="album-footer">
+          <button className="album-nav-btn" onClick={goBackward} disabled={page === 0} aria-label="Previous page">‹</button>
+          <span className="album-page-num">{page + 1} / {totalPages}</span>
+          <button className="album-nav-btn" onClick={goForward} disabled={page >= totalPages - 1} aria-label="Next page">›</button>
+        </div>
+      )}
+
+      {active && (
+        <div className="lightbox-overlay" onClick={closeLightbox} role="dialog" aria-modal="true">
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeLightbox} aria-label="Close">✕</button>
+            <div className="lightbox-img-wrap">
+              <Image src={active} alt="" width={900} height={600} className="lightbox-img" priority />
+              <div className="lightbox-glow" />
+            </div>
+            <div className="lightbox-nav">
+              <button className="lightbox-arrow" onClick={prevPhoto} aria-label="Previous" disabled={activeIdx <= 0}>‹</button>
+              <span className="lightbox-label">{activeIdx + 1} / {images.length} ♡</span>
+              <button className="lightbox-arrow" onClick={nextPhoto} aria-label="Next" disabled={activeIdx >= images.length - 1}>›</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
