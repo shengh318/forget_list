@@ -1,0 +1,241 @@
+.love-card-shell {
+  width: min(320px, 100%);
+  perspective: 1200px;
+}
+
+.love-card {
+  position: relative;
+  min-height: 390px;
+  transform-style: preserve-3d;
+}
+
+.love-card-front,
+.love-card-inside {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 147, 186, 0.55);
+  box-shadow: 0 14px 30px rgba(255, 101, 154, 0.24);
+  backface-visibility: hidden;
+  transition: transform 800ms cubic-bezier(.2, .8, .2, 1), opacity 300ms ease;
+  padding: 20px 18px;
+}
+
+.love-card-front {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(160deg, #ffe4f0, #ffd2e8 60%, #ffb6d5);
+  transition: background 0.3s ease;
+}
+
+[data-theme="light"] .love-card-front {
+  background: linear-gradient(160deg, #ffe4f0, #ffd2e8 60%, #ffb6d5);
+}
+
+.love-card-front h3 {
+  margin: 0;
+  color: #6f2845;
+  font-size: 34px;
+}
+
+.love-card-front p {
+  color: #8a3f60;
+  margin: 10px 0 18px;
+  max-width: 220px;
+}
+
+.love-card-btn {
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6ba1, #ff2d6f);
+  color: #fff;
+  font-weight: 700;
+  text-transform: lowercase;
+  padding: 11px 18px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(255, 45, 111, 0.28);
+}
+
+.love-card-inside {
+  background: linear-gradient(180deg, rgba(255, 237, 246, 0.95), rgba(255, 216, 234, 0.95));
+  transform: rotateY(-180deg);
+  opacity: 0;
+}
+
+.is-open .love-card-front {
+  transform: rotateY(180deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.is-open .love-card-inside {
+  transform: rotateY(0deg);
+  opacity: 1;
+}
+
+.love-card-front-decor {
+  display: flex;
+  gap: 12px;
+  font-size: 20px;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 12px;
+  color: #ff7aa2;
+  opacity: 0.4;
+  animation: floatHeart 3s ease-in-out infinite;
+}
+
+@keyframes floatHeart {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  50% { transform: translateY(-12px) rotate(10deg); opacity: 0.6; }
+}
+
+.love-card-inside-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.float-glow {
+  position: absolute;
+  font-size: 16px;
+  animation: floatGlow 3s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-10px) scale(1.2); opacity: 0.7; }
+}
+
+/* Flower */
+.flower-wrap {
+  position: relative;
+  margin: 0 auto;
+  width: 180px;
+  height: 190px;
+  filter: drop-shadow(0 10px 18px rgba(187, 53, 104, 0.2));
+  animation: floatFlower 3.4s ease-in-out infinite;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 18px;
+  animation: twinkle 2.6s ease-in-out infinite;
+}
+
+.sparkle-1 { top: 12px; left: 6px; }
+.sparkle-2 { top: 20px; right: 8px; animation-delay: .5s; }
+.sparkle-3 { top: 54px; left: -6px; animation-delay: .9s; }
+
+.petal {
+  position: absolute;
+  width: 58px;
+  height: 72px;
+  left: 50%;
+  top: 26px;
+  border-radius: 60% 60% 55% 55%;
+  background: linear-gradient(180deg, #ffb4cf, #ff6ea0);
+  transform-origin: 50% 92%;
+  animation: bloom 2.8s ease-in-out infinite;
+}
+
+.petal-1 { transform: translateX(-50%) rotate(0deg) translateY(-6px); }
+.petal-2 { transform: translateX(-50%) rotate(60deg) translateY(-6px); animation-delay: .2s; }
+.petal-3 { transform: translateX(-50%) rotate(120deg) translateY(-6px); animation-delay: .4s; }
+.petal-4 { transform: translateX(-50%) rotate(180deg) translateY(-6px); animation-delay: .6s; }
+.petal-5 { transform: translateX(-50%) rotate(240deg) translateY(-6px); animation-delay: .8s; }
+.petal-6 { transform: translateX(-50%) rotate(300deg) translateY(-6px); animation-delay: 1s; }
+
+.flower-center {
+  position: absolute;
+  left: 50%;
+  top: 56px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 30% 30%, #fff2a5, #ffcb5c);
+  border: 3px solid rgba(255, 181, 64, 0.85);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+.stem {
+  position: absolute;
+  left: 50%;
+  top: 98px;
+  width: 10px;
+  height: 80px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #4dbf7e, #21834f);
+}
+
+.leaf {
+  position: absolute;
+  top: 126px;
+  width: 46px;
+  height: 22px;
+  border-radius: 999px 999px 999px 0;
+  background: linear-gradient(180deg, #8be6ae, #41aa6f);
+  animation: leafWiggle 2.2s ease-in-out infinite;
+}
+
+.leaf-left { left: 50%; transform: translateX(-44px) rotate(-30deg); }
+.leaf-right { left: 50%; transform: translateX(0) scaleX(-1) rotate(-30deg); animation-delay: .4s; }
+
+.flower-note {
+  margin: 10px 0 0;
+  text-align: center;
+  color: #6f2845;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@keyframes floatFlower {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes bloom {
+  0%, 100% { margin-top: 0; filter: saturate(1); }
+  50% { margin-top: -6px; filter: saturate(1.2); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.08); }
+}
+
+@keyframes leafWiggle {
+  0%, 100% { margin-left: 0; }
+  50% { margin-left: 2px; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: .3; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@media (max-width: 640px) {
+  .love-card-shell { width: 100%; }
+  .love-card { min-height: 320px; }
+  .love-card-front h3 { font-size: 26px; }
+  .flower-wrap { width: 140px; height: 150px; }
+  .petal { width: 44px; height: 54px; top: 20px; }
+  .flower-center { top: 44px; width: 34px; height: 34px; }
+  .stem { top: 76px; height: 60px; }
+  .leaf { top: 100px; width: 36px; height: 18px; }
+  .leaf-left { transform: translateX(-34px) rotate(-30deg); }
+  .leaf-right { transform: translateX(0) scaleX(-1) rotate(-30deg); }
+}

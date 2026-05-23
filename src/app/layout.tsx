@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ThemeToggle from "./components/ThemeToggle";
+import "./components/theme-toggle/theme-toggle.css";
+import "./components/forget-list/forget-list.css";
+import "./components/gallery/gallery.css";
+import "./components/flower/flower.css";
+import "./components/valentine/valentine.css";
+import "./components/valentine-runner/valentine-runner.css";
+import "./components/birthday/birthday.css";
+import ThemeToggle from "./components/theme-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

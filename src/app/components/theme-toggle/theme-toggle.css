@@ -1,0 +1,34 @@
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--toggle-bg);
+  backdrop-filter: blur(12px);
+  font-size: 20px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+  transition: all 0.25s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(var(--accent-rgb), 0.15);
+}
+
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+  }
+}

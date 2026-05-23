@@ -1,0 +1,201 @@
+.valentine-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.valentine-card {
+  position: relative;
+  max-width: 560px;
+  width: 100%;
+  background: linear-gradient(180deg, #fff5fb 0%, #ffe8f1 40%, #ffe0ec 100%);
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(255, 112, 148, 0.25);
+  padding: 24px;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.valentine-card:hover {
+  box-shadow: 0 20px 50px rgba(255, 112, 148, 0.3);
+}
+
+.valentine-accepted {
+  transform: scale(1.02);
+}
+
+.valentine-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+.valentine-bunny-art {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  margin: 0 auto 12px;
+}
+
+.bunny-ear {
+  position: absolute;
+  top: -30px;
+  width: 46px;
+  height: 86px;
+  border-radius: 40px;
+  background: linear-gradient(180deg, #fff 0%, #ffe3ec 100%);
+  border: 2px solid #ff9bb3;
+}
+
+.bunny-ear-left { left: 18px; transform: rotate(-8deg); }
+.bunny-ear-right { right: 18px; transform: rotate(8deg); }
+
+.bunny-face {
+  position: absolute;
+  inset: 12px;
+  border-radius: 999px;
+  background: white;
+  box-shadow: 0 8px 20px rgba(255, 122, 162, 0.2);
+  border: 2px solid #ffd1df;
+}
+
+.bunny-eye {
+  position: absolute;
+  top: 48px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #5b2a3a;
+  animation: bunnyBlink 3s ease-in-out infinite;
+}
+
+.bunny-eye-left { left: 38px; }
+.bunny-eye-right { right: 38px; }
+
+@keyframes bunnyBlink {
+  0%, 45%, 55%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.1); }
+}
+
+.bunny-nose {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 20px;
+  height: 14px;
+  border-radius: 50% 50% 60% 60%;
+  background: #ff7aa2;
+  transform: translateX(-50%);
+}
+
+.bunny-cheek {
+  position: absolute;
+  top: 80px;
+  width: 24px;
+  height: 14px;
+  border-radius: 999px;
+  background: #ffd1df;
+}
+
+.bunny-cheek-left { left: 26px; }
+.bunny-cheek-right { right: 26px; }
+
+.valentine-title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  color: #4a1a2a;
+  font-weight: 700;
+}
+
+.valentine-sub {
+  margin: 0 0 18px;
+  color: #5b2a3a;
+  font-size: 15px;
+}
+
+.valentine-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.valentine-btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.valentine-btn:hover {
+  transform: translateY(-2px);
+}
+
+.valentine-btn:active {
+  transform: translateY(0);
+}
+
+.valentine-btn-yes {
+  background: linear-gradient(135deg, #ff6b9d, #ff2d6f);
+  color: white;
+  box-shadow: 0 10px 20px rgba(255, 45, 111, 0.25);
+}
+
+.valentine-btn-no {
+  background: white;
+  color: #ff2d6f;
+  border: 2px solid #ff9bb3;
+}
+
+.valentine-btn-hooray {
+  background: #ff2d6f;
+  color: white;
+  box-shadow: 0 8px 20px rgba(255, 45, 111, 0.18);
+}
+
+.valentine-btn-icon {
+  font-size: 16px;
+}
+
+.valentine-result {
+  margin-top: 12px;
+}
+
+.valentine-result-emoji {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.valentine-result-text {
+  margin: 8px 0;
+  color: #4a1a2a;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+@media (max-width: 640px) {
+  .valentine-bunny-art { width: 120px; height: 120px; }
+  .bunny-ear { width: 36px; height: 66px; }
+  .bunny-ear-left { left: 14px; }
+  .bunny-ear-right { right: 14px; }
+  .bunny-eye { width: 13px; height: 13px; top: 38px; }
+  .bunny-eye-left { left: 30px; }
+  .bunny-eye-right { right: 30px; }
+  .bunny-nose { top: 56px; width: 16px; height: 11px; }
+  .bunny-cheek { top: 64px; width: 20px; height: 11px; }
+  .bunny-cheek-left { left: 20px; }
+  .bunny-cheek-right { right: 20px; }
+  .valentine-title { font-size: 18px; }
+  .valentine-sub { font-size: 13px; }
+  .valentine-btn { padding: 8px 16px; font-size: 14px; }
+}

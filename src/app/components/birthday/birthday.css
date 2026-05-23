@@ -1,0 +1,179 @@
+.birthday-card {
+  width: 100%;
+  border-radius: 22px;
+  padding: 24px;
+  text-align: center;
+  border: 2px solid rgba(255, 164, 211, 0.55);
+  background: linear-gradient(140deg, rgba(106, 39, 112, 0.55), rgba(64, 12, 76, 0.88));
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35), inset 0 0 25px rgba(255, 198, 241, 0.18);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+[data-theme="light"] .birthday-card {
+  background: linear-gradient(140deg, rgba(236, 162, 232, 0.35), rgba(216, 148, 228, 0.25));
+  box-shadow: 0 16px 30px rgba(180, 100, 180, 0.12), inset 0 0 25px rgba(200, 150, 220, 0.1);
+}
+
+.birthday-card h2 {
+  margin: 4px 0 12px;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+[data-theme="light"] .birthday-card h2 {
+  color: #4a1a3a;
+}
+
+.birthday-card p {
+  margin: 0 auto 20px;
+  max-width: 620px;
+  font-size: 1.05rem;
+  color: #ffeef9;
+}
+
+[data-theme="light"] .birthday-card p {
+  color: #4a2a3a;
+}
+
+.birthday-confetti {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 1.4rem;
+}
+
+.birthday-confetti span {
+  animation: confettiBounce 1.6s ease-in-out infinite;
+}
+
+.birthday-confetti span:nth-child(2) { animation-delay: .2s; }
+.birthday-confetti span:nth-child(3) { animation-delay: .4s; }
+.birthday-confetti span:nth-child(4) { animation-delay: .6s; }
+.birthday-confetti span:nth-child(5) { animation-delay: .15s; }
+.birthday-confetti span:nth-child(6) { animation-delay: .3s; }
+
+.cake {
+  position: relative;
+  width: 190px;
+  margin: 0 auto;
+  padding-top: 22px;
+}
+
+.cake-candle {
+  width: 16px;
+  height: 40px;
+  border-radius: 999px;
+  margin: 0 auto;
+  background: repeating-linear-gradient(45deg, #ffd34f 0 6px, #ff7ac8 6px 12px);
+  position: relative;
+}
+
+.cake-flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 14px;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(circle at 50% 75%, #fff8be 0 35%, #ff8f2d 65%, #ff5f0d 100%);
+  animation: flameFlicker .8s ease-in-out infinite;
+}
+
+.cake-top {
+  margin: 4px auto 0;
+  width: 120px;
+  height: 20px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffd6ec, #ffc2e3);
+}
+
+.cake-body {
+  margin: -8px auto 0;
+  width: 150px;
+  height: 75px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ff9fcf, #ff6dad);
+  border: 2px solid rgba(255, 255, 255, 0.38);
+}
+
+.cake-plate {
+  margin: 8px auto 0;
+  width: 190px;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #eef0ff, #c9d0ff);
+}
+
+@keyframes confettiBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes flameFlicker {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+  50% { transform: translateX(-50%) scale(0.86, 1.1); opacity: 0.9; }
+}
+
+.birthday-bg-sparkles {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 16px;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+.birthday-bg-sparkles span {
+  font-size: 14px;
+  opacity: 0.2;
+  animation: bgSparkle 2.4s ease-in-out infinite;
+}
+
+.birthday-bg-sparkles span:nth-child(odd) { animation-delay: 0.3s; }
+.birthday-bg-sparkles span:nth-child(3n) { animation-delay: 0.8s; }
+.birthday-bg-sparkles span:nth-child(4n) { animation-delay: 1.2s; }
+
+@keyframes bgSparkle {
+  0%, 100% { opacity: 0.1; transform: translateY(0); }
+  50% { opacity: 0.35; transform: translateY(-6px); }
+}
+
+.birthday-name {
+  background: linear-gradient(135deg, #ff9fcf, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.birthday-divider {
+  color: rgba(255, 164, 211, 0.5);
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  margin: -4px 0 16px;
+}
+
+.birthday-footer {
+  margin-top: 18px;
+  font-size: 13px;
+  color: rgba(255, 200, 230, 0.5);
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="light"] .birthday-footer {
+  color: rgba(100, 40, 80, 0.4);
+}
+
+@media (max-width: 640px) {
+  .birthday-card { padding: 18px; }
+  .birthday-card h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+  .birthday-card p { font-size: 0.95rem; }
+  .cake { width: 150px; }
+  .cake-body { width: 120px; height: 60px; }
+  .cake-top { width: 96px; }
+  .cake-plate { width: 150px; }
+}

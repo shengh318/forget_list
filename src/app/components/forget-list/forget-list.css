@@ -1,0 +1,308 @@
+.fl-header {
+  margin-bottom: 20px;
+}
+
+.fl-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.fl-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  white-space: nowrap;
+}
+
+.fl-add-wrap {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.fl-input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-accent);
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fl-input::placeholder { color: var(--muted); font-weight: 300; }
+
+.fl-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
+}
+
+.fl-add-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #ff1c89);
+  color: white;
+  font-size: 24px;
+  font-weight: 300;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+}
+
+.fl-add-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.3);
+}
+
+.fl-add-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.fl-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.fl-progress-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--card);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.fl-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+  transition: width 0.3s ease;
+}
+
+.fl-progress-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 32px;
+  text-align: right;
+}
+
+.fl-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fl-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border-accent);
+  transition: all 0.2s ease;
+}
+
+.fl-item:hover {
+  border-color: rgba(var(--accent-rgb), 0.4);
+  box-shadow: 0 4px 16px var(--glow);
+}
+
+.fl-item-done {
+  opacity: 0.6;
+  border-color: rgba(var(--accent-rgb), 0.08);
+  background: rgba(var(--accent-rgb), 0.02);
+}
+
+.fl-item-done:hover {
+  border-color: rgba(var(--accent-rgb), 0.15);
+}
+
+.fl-item-pop {
+  animation: itemPop 0.3s ease;
+}
+
+@keyframes itemPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.fl-check {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 8px;
+  border: 2px solid var(--border-accent);
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: white;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.fl-check:hover {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.05);
+}
+
+.fl-checked {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.25);
+}
+
+.fl-checked:hover {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  opacity: 0.9;
+}
+
+.fl-text {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.fl-item-done .fl-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.fl-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.fl-status-done {
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), 0.2);
+  background: rgba(var(--accent-rgb), 0.05);
+}
+
+.fl-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 32px 20px;
+  color: var(--muted);
+}
+
+.fl-empty-icon { font-size: 36px; opacity: 0.4; }
+.fl-empty p { margin: 0; font-size: 14px; }
+
+.fl-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  gap: 12px;
+}
+
+.fl-remove-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.fl-remove-btn:hover:not(:disabled) {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.fl-remove-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.fl-encourage {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.fl-bear {
+  position: absolute;
+  left: -6px;
+  bottom: calc(100% - 12px);
+  width: 90px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 6px 14px rgba(var(--accent-rgb), 0.12));
+}
+
+.fl-bunny {
+  position: absolute;
+  right: -24px;
+  bottom: 6px;
+  width: 60px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 6px 14px rgba(var(--accent-rgb), 0.12));
+}
+
+@media (max-width: 720px) {
+  .fl-bear {
+    left: -16px;
+    bottom: -8px;
+    width: 64px;
+  }
+  .fl-bunny {
+    right: -12px;
+    top: -10px;
+    width: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fl-header { margin-bottom: 14px; }
+  .fl-input { padding: 10px 14px; font-size: 13px; }
+  .fl-add-btn { width: 40px; height: 40px; font-size: 20px; }
+  .fl-item { padding: 10px 12px; }
+  .fl-check { width: 22px; height: 22px; min-width: 22px; }
+  .fl-text { font-size: 14px; }
+  .fl-status { font-size: 10px; padding: 2px 6px; }
+  .fl-remove-btn { font-size: 12px; padding: 6px 10px; }
+  .fl-encourage { font-size: 12px; }
+  .fl-progress-wrap { margin-bottom: 12px; }
+}

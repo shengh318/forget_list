@@ -1,23 +1,13 @@
-import Gallery from "./components/Gallery";
-import Valentine from "./components/Valentine";
-import ValentineRunner from "./components/ValentineRunner";
-import Flower from "./components/Flower";
-import HappyBirthday from "./components/HappyBirthday";
-import ForgetList from "./components/ForgetList";
-import { readdir } from "fs/promises";
-import path from "path";
+import Gallery from "./components/gallery";
+import Valentine from "./components/valentine";
+import ValentineRunner from "./components/valentine-runner";
+import Flower from "./components/flower";
+import HappyBirthday from "./components/birthday";
+import ForgetList from "./components/forget-list";
+import { getPhotos } from "@/lib/getPhotos";
 
 export default async function Home() {
-  const dir = path.join(process.cwd(), "public", "photos");
-  let images: string[] = [];
-  try {
-    const names = await readdir(dir);
-    images = names
-      .filter((n) => /\.(jpe?g|png|gif|webp|avif|svg)$/i.test(n))
-      .map((n) => `./photos/${n}`);
-  } catch {
-    images = [];
-  }
+  const images = await getPhotos();
 
   return (
     <main className="app">
