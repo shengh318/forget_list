@@ -204,17 +204,6 @@
   background: var(--card-hover, rgba(0,0,0,0.03));
 }
 
-.mbta-popup-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-  color: var(--muted);
-}
-
 .mbta-popup-close {
   background: none;
   border: none;

@@ -356,6 +356,11 @@ export default function MbtaTracker() {
         <div className="mbta-popup-header">
           <span>🚇 {selectedStation.name}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {lastUpdated && (
+              <span className={refreshing ? "mbta-refreshing" : ""} style={{ fontSize: 12, color: 'var(--muted)' }}>
+                Updated {formatTimeAgo(lastUpdated)}
+              </span>
+            )}
             <button className="mbta-popup-refresh" onClick={handleRefresh}>
               ↻
             </button>
@@ -417,14 +422,6 @@ export default function MbtaTracker() {
               </div>
             );
           })}
-
-        {lastUpdated && (
-          <div className="mbta-popup-footer">
-            <span className={refreshing ? "mbta-refreshing" : ""}>
-              Updated {formatTimeAgo(lastUpdated)}
-            </span>
-          </div>
-        )}
       </div>
       </div>
     );
