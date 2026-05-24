@@ -177,13 +177,6 @@ function formatMinutesUntil(arrivalTime: string | null): string {
   return `${diffMins} min`;
 }
 
-function formatTimeAgo(timestamp: number): string {
-  const sec = Math.round((Date.now() - timestamp) / 1000);
-  if (sec < 5) return "just now";
-  if (sec < 60) return `${sec}s ago`;
-  return `${Math.floor(sec / 60)}m ago`;
-}
-
 export default function MbtaTracker() {
   const [selectedStop, setSelectedStop] = useState<string | null>(null);
   const [predictions, setPredictions] = useState<PredictionData[]>([]);
@@ -192,10 +185,57 @@ export default function MbtaTracker() {
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const svgRef = useRef<SVGSVGElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const fetchRef = useRef<() => void>(() => {});
   const cancelledRef = useRef(false);
+
+  const fetchPredictions = useCallback(async () => {
+    if (!selectedStop) return;
+    const start = Date.now();
+    setRefreshing(true);
+    try {
+      const url = `${MBTA_API_BASE}/predictions?filter[stop]=${selectedStop}&include=route&api_key=${MBTA_API_KEY}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data: ApiData = await res.json();
+      if (cancelledRef.current) return;
+
+      setPredictions(
+        data.data.map((item) => ({
+          id: item.id,
+          arrivalTime: item.attributes.arrival_time,
+          departureTime: item.attributes.departure_time,
+          directionId: item.attributes.direction_id,
+          routeId: item.relationships.route.data.id,
+        }))
+      );
+
+      const routeMap = new Map<string, RouteInfo>();
+      for (const incl of data.included) {
+        if (incl.type === "route") {
+          routeMap.set(incl.id, {
+            id: incl.id,
+            color: `#${incl.attributes.color}`,
+            directionDestinations: incl.attributes.direction_destinations,
+          });
+        }
+      }
+      setRouteInfoMap(routeMap);
+      setError(null);
+      setLastUpdated(Date.now());
+    } catch {
+      if (!cancelledRef.current) setError("Couldn't load MBTA data");
+    } finally {
+      if (!cancelledRef.current) {
+        const elapsed = Date.now() - start;
+        if (elapsed < 800) {
+          await new Promise((r) => setTimeout(r, 800 - elapsed));
+        }
+        if (!cancelledRef.current) setRefreshing(false);
+      }
+    }
+  }, [selectedStop]);
 
   useEffect(() => {
     const t = setTimeout(() => setInitialLoading(false), 500);
@@ -212,57 +252,18 @@ export default function MbtaTracker() {
     }
 
     cancelledRef.current = false;
-
-    const fetchData = async () => {
-      setRefreshing(true);
-      try {
-        const url = `${MBTA_API_BASE}/predictions?filter[stop]=${selectedStop}&include=route&api_key=${MBTA_API_KEY}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data: ApiData = await res.json();
-        if (cancelledRef.current) return;
-
-        setPredictions(
-          data.data.map((item) => ({
-            id: item.id,
-            arrivalTime: item.attributes.arrival_time,
-            departureTime: item.attributes.departure_time,
-            directionId: item.attributes.direction_id,
-            routeId: item.relationships.route.data.id,
-          }))
-        );
-
-        const routeMap = new Map<string, RouteInfo>();
-        for (const incl of data.included) {
-          if (incl.type === "route") {
-            routeMap.set(incl.id, {
-              id: incl.id,
-              color: `#${incl.attributes.color}`,
-              directionDestinations: incl.attributes.direction_destinations,
-            });
-          }
-        }
-        setRouteInfoMap(routeMap);
-        setError(null);
-        setLastUpdated(Date.now());
-      } catch {
-        if (!cancelledRef.current) setError("Couldn't load MBTA data");
-      } finally {
-        if (!cancelledRef.current) setRefreshing(false);
-      }
-    };
-
-    fetchRef.current = fetchData;
-    fetchData();
+    fetchPredictions();
 
     return () => {
       cancelledRef.current = true;
     };
-  }, [selectedStop]);
+  }, [selectedStop, fetchPredictions]);
 
   const handleRefresh = useCallback(() => {
-    fetchRef.current();
-  }, []);
+    cancelledRef.current = false;
+    setRefreshKey((k) => k + 1);
+    fetchPredictions();
+  }, [fetchPredictions]);
 
   const handleStationClick = useCallback(
     (station: StationConfig, e: React.MouseEvent) => {
@@ -358,11 +359,11 @@ export default function MbtaTracker() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             {lastUpdated && (
               <span className={refreshing ? "mbta-refreshing" : ""} style={{ fontSize: 12, color: 'var(--muted)' }}>
-                Updated {formatTimeAgo(lastUpdated)}
+                Updated at {new Date(lastUpdated).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit' })}
               </span>
             )}
             <button className="mbta-popup-refresh" onClick={handleRefresh}>
-              ↻
+              <span key={refreshKey} className={refreshing ? "mbta-popup-refresh-spinning" : ""}>↻</span>
             </button>
             <button className="mbta-popup-close" onClick={handleClose}>
               ✕

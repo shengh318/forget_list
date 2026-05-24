@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 const GLASS_ML = 250;
 const GOAL_ML = 2000;
@@ -43,29 +43,32 @@ function loadInterval(): number {
 }
 
 export default function HydrationTracker() {
-  const [waterData, setWaterData] = useState<WaterData>(loadWater);
+  const [waterData, setWaterData] = useState<WaterData>({ date: todayKey(), totalMl: 0 });
   const [notifStatus, setNotifStatus] = useState<NotificationPermission | "unsupported">("default");
   const [intervalMs, setIntervalMs] = useState(loadInterval);
   const [animating, setAnimating] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const hydrated = useRef(false);
 
   useEffect(() => {
     try { localStorage.setItem("hydrate-interval", String(intervalMs)); } catch { /* ignore */ }
   }, [intervalMs]);
 
   useEffect(() => {
+    if (!hydrated.current) return;
     try { localStorage.setItem("hydrate-data", JSON.stringify(waterData)); } catch { /* ignore */ }
   }, [waterData]);
 
   useEffect(() => {
+    const saved = loadWater();
+    setWaterData(saved);
+    hydrated.current = true;
     if ("Notification" in window) {
       setNotifStatus(Notification.permission);
     } else {
       setNotifStatus("unsupported");
     }
   }, []);
-
-  // Day rollover
   useEffect(() => {
     const id = setInterval(() => {
       setWaterData((prev) => {
