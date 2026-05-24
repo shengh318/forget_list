@@ -152,7 +152,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, var(--tile-width)));
   grid-template-areas:
-    "hydrate photos"
+    "hydrate mbta"
     "forget photos"
     "ask card"
     "game game"
@@ -169,6 +169,7 @@ body {
 .grid-valentine-ask { grid-area: ask; display: flex; justify-content: flex-start; }
 .grid-valentine-card { grid-area: card; display: flex; justify-content: flex-start; }
 .grid-valentine-game { grid-area: game; display: flex; justify-content: center; }
+.grid-mbta { grid-area: mbta; }
 .grid-birthday { grid-area: birthday; display: flex; justify-content: center; }
 
 .uniform-tile {
@@ -179,6 +180,7 @@ body {
 .grid-hydrate,
 .grid-forgetlist,
 .grid-photos,
+.grid-mbta,
 .grid-valentine-ask,
 .grid-valentine-card,
 .grid-valentine-game,
@@ -190,6 +192,7 @@ body {
 
 .grid-hydrate .card,
 .grid-forgetlist .card,
+.grid-mbta .card,
 .grid-photos .gallery,
 .grid-valentine-ask .val-game,
 .grid-valentine-card .love-card-shell,
@@ -201,6 +204,7 @@ body {
 
 .grid-hydrate .card,
 .grid-forgetlist .card,
+.grid-mbta .card,
 .grid-photos .gallery,
 .grid-valentine-ask .val-game,
 .grid-valentine-game .runner,
@@ -232,6 +236,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-areas:
       "hydrate"
+      "mbta"
       "forget"
       "photos"
       "ask"
@@ -245,6 +250,7 @@ body {
   .grid-hydrate,
   .grid-forgetlist,
   .grid-photos,
+  .grid-mbta,
   .grid-valentine-ask,
   .grid-valentine-card,
   .grid-valentine-game {
@@ -261,6 +267,7 @@ body {
 
   .grid-hydrate .card,
   .grid-forgetlist .card,
+  .grid-mbta .card,
   .grid-photos .gallery,
   .grid-valentine-ask .val-game,
   .grid-valentine-game .runner,
@@ -334,6 +341,7 @@ body {
 
   .grid-hydrate .card,
   .grid-forgetlist .card,
+  .grid-mbta .card,
   .grid-photos .gallery,
   .grid-valentine-ask .val-game,
   .grid-valentine-game .runner,

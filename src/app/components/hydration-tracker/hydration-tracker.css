@@ -369,6 +369,25 @@
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
 }
 
+.hydrate-test-btn {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(var(--accent-rgb), 0.06);
+  border: 1px dashed var(--border-accent);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.hydrate-test-btn:hover {
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
 /* Log animation on bottle */
 .hydrate-log-splash .hydrate-water {
   animation: hydrateFillPop 0.6s ease;

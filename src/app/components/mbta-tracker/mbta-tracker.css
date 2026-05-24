@@ -1,0 +1,287 @@
+.mbta-card {
+  position: relative;
+}
+
+.mbta-header {
+  margin-bottom: 10px;
+}
+
+.mbta-header h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.mbta-map-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.mbta-map-wrap svg {
+  width: 100%;
+  height: auto;
+  max-width: 460px;
+}
+
+.mbta-station {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.mbta-station:hover {
+  opacity: 0.8;
+}
+
+.mbta-station-label {
+  font-family: Inter, system-ui, sans-serif;
+  fill: var(--text);
+  pointer-events: none;
+}
+
+.mbta-station-label-transfer {
+  font-weight: 700;
+  font-size: 10px;
+}
+
+/* Loading skeleton */
+.mbta-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 0;
+}
+
+.mbta-skeleton-line {
+  height: 4px;
+  background: var(--card-hover);
+  border-radius: 2px;
+  animation: mbta-pulse 1.5s ease-in-out infinite;
+}
+
+.mbta-skeleton-station {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--card-hover);
+  animation: mbta-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes mbta-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Error state */
+.mbta-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+}
+
+.mbta-error p {
+  margin: 0 0 12px;
+}
+
+.mbta-retry-btn {
+  background: linear-gradient(135deg, var(--accent), #ff1c89);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Popup overlay — covers the full card */
+.mbta-popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  border-radius: 20px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: mbta-popup-fade 0.2s ease-out;
+}
+
+@keyframes mbta-popup-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mbta-popup {
+  background: var(--bg);
+  border: 1px solid var(--border-accent);
+  border-radius: 16px;
+  padding: 22px 26px;
+  width: 92%;
+  max-width: 420px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  line-height: 1.5;
+  animation: mbta-popup-in 0.25s ease-out;
+}
+
+@keyframes mbta-popup-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.mbta-popup-header {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mbta-popup-section {
+  margin-bottom: 12px;
+}
+
+.mbta-popup-section:last-child {
+  margin-bottom: 0;
+}
+
+.mbta-popup-route-header {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mbta-popup-route-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.mbta-popup-dir-header {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 6px;
+  margin-bottom: 2px;
+  border-radius: 6px;
+}
+
+.mbta-popup-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px 4px 6px;
+  font-size: 13px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.mbta-popup-row:hover {
+  background: var(--card-hover, rgba(0,0,0,0.03));
+}
+
+.mbta-popup-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.mbta-popup-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.mbta-popup-close:hover {
+  color: var(--text);
+}
+
+.mbta-popup-refresh {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  padding: 4px 10px;
+  line-height: 1;
+  transition: all 0.15s;
+}
+
+.mbta-popup-refresh:hover {
+  color: var(--text);
+  border-color: var(--text-secondary);
+  background: var(--card-hover, rgba(0,0,0,0.03));
+}
+
+.mbta-popup-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: mbta-spin 0.6s linear infinite;
+}
+
+@keyframes mbta-spin {
+  to { transform: rotate(360deg); }
+}
+
+.mbta-popup-empty {
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* Refreshing indicator */
+.mbta-refreshing {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+@media (max-width: 640px) {
+  .mbta-popup {
+    min-width: 170px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .mbta-popup-header {
+    font-size: 13px;
+  }
+}

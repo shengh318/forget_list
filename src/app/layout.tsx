@@ -9,6 +9,7 @@ import "./components/flower/flower.css";
 import "./components/valentine/valentine.css";
 import "./components/valentine-runner/valentine-runner.css";
 import "./components/birthday/birthday.css";
+import "./components/mbta-tracker/mbta-tracker.css";
 import ThemeToggle from "./components/theme-toggle";
 
 const geistSans = Geist({

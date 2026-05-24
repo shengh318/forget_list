@@ -134,6 +134,13 @@ export default function HydrationTracker() {
     setTimeout(() => setAnimating(false), 600);
   }, []);
 
+  const sendTestNotification = useCallback(() => {
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    new Notification("💧 Test Notification", {
+      body: "This is a test~ ty ty 🫧",
+    });
+  }, []);
+
   const resetToday = useCallback(() => {
     setWaterData((prev) => ({ ...prev, totalMl: 0 }));
     localStorage.setItem("hydrate-last-notified", String(Date.now()));
@@ -157,16 +164,23 @@ function fmtCountdown(ms: number): string {
       <div className="hydrate-header">
         <div className="hydrate-title-row">
           <h1>💧 Hydration</h1>
-          <span className="hydrate-notif-badge" title={
-            notifStatus === "granted" ? "Notifications on" :
-            notifStatus === "denied" ? "Notifications blocked" :
-            notifStatus === "unsupported" ? "Not supported" :
-            "Notifications off"
-          }>
-            {notifStatus === "granted" ? "🔔" :
-             notifStatus === "denied" ? "🔕" :
-             notifStatus === "unsupported" ? "🚫" : "🔇"}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            {notifStatus === "granted" && (
+              <button className="hydrate-test-btn" onClick={sendTestNotification}>
+                Test
+              </button>
+            )}
+            <span className="hydrate-notif-badge" title={
+              notifStatus === "granted" ? "Notifications on" :
+              notifStatus === "denied" ? "Notifications blocked" :
+              notifStatus === "unsupported" ? "Not supported" :
+              "Notifications off"
+            }>
+              {notifStatus === "granted" ? "🔔" :
+               notifStatus === "denied" ? "🔕" :
+               notifStatus === "unsupported" ? "🚫" : "🔇"}
+            </span>
+          </div>
         </div>
         <p className="subtitle">stay hydrated, ty ty ♡</p>
       </div>

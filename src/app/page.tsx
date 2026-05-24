@@ -5,6 +5,7 @@ import Flower from "./components/flower";
 import HappyBirthday from "./components/birthday";
 import ForgetList from "./components/forget-list";
 import HydrationTracker from "./components/hydration-tracker";
+import MbtaTracker from "./components/mbta-tracker";
 import { getPhotos } from "@/lib/getPhotos";
 
 export default async function Home() {
@@ -22,6 +23,10 @@ export default async function Home() {
       <div className="layout layout-grid">
         <div className="uniform-tile grid-hydrate">
           <HydrationTracker />
+        </div>
+
+        <div className="uniform-tile grid-mbta">
+          <MbtaTracker />
         </div>
 
         <ForgetList />
