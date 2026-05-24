@@ -152,6 +152,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, var(--tile-width)));
   grid-template-areas:
+    "hydrate photos"
     "forget photos"
     "ask card"
     "game game"
@@ -162,6 +163,7 @@ body {
   justify-content: center;
 }
 
+.grid-hydrate { grid-area: hydrate; }
 .grid-forgetlist { grid-area: forget; }
 .grid-photos { grid-area: photos; }
 .grid-valentine-ask { grid-area: ask; display: flex; justify-content: flex-start; }
@@ -174,6 +176,7 @@ body {
   min-height: var(--tile-min-height);
 }
 
+.grid-hydrate,
 .grid-forgetlist,
 .grid-photos,
 .grid-valentine-ask,
@@ -185,6 +188,7 @@ body {
   justify-content: center;
 }
 
+.grid-hydrate .card,
 .grid-forgetlist .card,
 .grid-photos .gallery,
 .grid-valentine-ask .val-game,
@@ -195,6 +199,7 @@ body {
   max-width: none;
 }
 
+.grid-hydrate .card,
 .grid-forgetlist .card,
 .grid-photos .gallery,
 .grid-valentine-ask .val-game,
@@ -226,6 +231,7 @@ body {
   .layout-grid {
     grid-template-columns: 1fr;
     grid-template-areas:
+      "hydrate"
       "forget"
       "photos"
       "ask"
@@ -236,6 +242,7 @@ body {
     justify-items: center;
   }
 
+  .grid-hydrate,
   .grid-forgetlist,
   .grid-photos,
   .grid-valentine-ask,
@@ -252,6 +259,7 @@ body {
 
   .uniform-tile { min-height: 360px; }
 
+  .grid-hydrate .card,
   .grid-forgetlist .card,
   .grid-photos .gallery,
   .grid-valentine-ask .val-game,
@@ -324,6 +332,7 @@ body {
     padding: 16px;
   }
 
+  .grid-hydrate .card,
   .grid-forgetlist .card,
   .grid-photos .gallery,
   .grid-valentine-ask .val-game,

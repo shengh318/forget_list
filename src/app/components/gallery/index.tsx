@@ -7,21 +7,25 @@ type Props = { paths?: string[] };
 
 const ROTATIONS = ["-2deg", "1.5deg", "-1deg", "2.5deg", "0deg", "-1.5deg", "2deg", "-0.5deg"];
 
-type Size = "sm" | "md" | "lg";
+type Size = "sm" | "md" | "lg" | "xs";
 
 const LAYOUTS: [Size[], Size[]][] = [
-  [["lg"], ["sm", "sm", "sm"]],
-  [["sm", "sm", "sm"], ["md", "md"]],
-  [["md", "sm"], ["lg"]],
-  [["sm", "sm"], ["sm", "sm", "sm"]],
-  [["lg"], ["lg"]],
-  [["md", "md"], ["sm", "sm"]],
+  [["xs", "md", "xs"], ["xs", "xs", "xs", "xs"]],
+  [["sm", "sm", "sm"], ["xs", "md", "xs"]],
+  [["xs", "xs", "xs", "xs"], ["sm", "sm"]],
+  [["xs", "lg"], ["xs", "xs", "xs", "xs"]],
+  [["md", "xs", "xs"], ["xs", "xs", "md"]],
+  [["xs", "xs"], ["xs", "xs", "xs", "xs"]],
+  [["sm", "xs", "sm"], ["xs", "xs", "xs", "xs"]],
+  [["xs", "xs", "xs", "xs"], ["xs", "xs", "xs", "xs"]],
+  [["xs", "sm", "xs"], ["sm", "xs", "sm"]],
 ];
 
 const SIZE_MAP: Record<Size, { w: number; h: number }> = {
-  sm: { w: 90, h: 70 },
-  md: { w: 130, h: 95 },
-  lg: { w: 180, h: 130 },
+  xs: { w: 75, h: 58 },
+  sm: { w: 88, h: 68 },
+  md: { w: 120, h: 88 },
+  lg: { w: 160, h: 115 },
 };
 
 export default function Gallery({ paths }: Props) {
@@ -44,16 +48,30 @@ export default function Gallery({ paths }: Props) {
   const [active, setActive] = useState<string | null>(null);
   const [activeIdx, setActiveIdx] = useState(-1);
 
-  const photosPerSpread = 4;
+  const photosPerSpread = 8;
   const totalPages = Math.max(1, Math.ceil(images.length / photosPerSpread));
 
+  const [layoutSeed, setLayoutSeed] = useState(0);
+
+  const pickLayout = useCallback(() => {
+    setLayoutSeed(Math.floor(Math.random() * LAYOUTS.length));
+  }, []);
+
   const goForward = useCallback(() => {
-    setPage((p) => Math.min(p + 1, totalPages - 1));
-  }, [totalPages]);
+    setPage((p) => {
+      const next = Math.min(p + 1, totalPages - 1);
+      if (next !== p) pickLayout();
+      return next;
+    });
+  }, [totalPages, pickLayout]);
 
   const goBackward = useCallback(() => {
-    setPage((p) => Math.max(p - 1, 0));
-  }, []);
+    setPage((p) => {
+      const next = Math.max(p - 1, 0);
+      if (next !== p) pickLayout();
+      return next;
+    });
+  }, [pickLayout]);
 
   const openLightbox = useCallback((globalIdx: number) => {
     setActive(images[globalIdx]);
@@ -95,7 +113,7 @@ export default function Gallery({ paths }: Props) {
   }, [active, closeLightbox, prevPhoto, nextPhoto]);
 
   const startIdx = page * photosPerSpread;
-  const layout = LAYOUTS[page % LAYOUTS.length];
+  const layout = LAYOUTS[layoutSeed];
   let photoIdx = 0;
 
   const renderPolaroid = (globalIdx: number, size: Size, rotIdx: number) => {

@@ -29,6 +29,7 @@ src/
       valentine/              — Bunny-themed "Will you be my Valentine?" with canvas confetti
       valentine-runner/       — Arrow-key collection game (Heart Dash Deluxe)
       birthday/               — Birthday celebration card with animated cake
+      hydration-tracker/      — Water intake tracker with hourly reminders
 ```
 
 ## Components
@@ -50,6 +51,9 @@ An arrow-key collection game ("Heart Dash Deluxe"). A bunny (🐰) moves on a 36
 
 ### `HappyBirthday` (`components/birthday/`)
 A static server component. Displays a birthday card with confetti animation, a CSS cake with a flickering flame candle, and a personalized message.
+
+### `HydrationTracker` (`components/hydration-tracker/`)
+An interactive water intake tracker. Log glasses of water (250ml each) toward a 2000ml daily goal, visualized with a CSS water bottle that fills up with an animated wave and floating bubbles. Sends browser `Notification` API reminders at a user-chosen interval (15 min to 4 hrs) — works on desktop and Android Chrome, even when in other apps. Customizable from the UI. State (water data, interval preference, last notified timestamp) persisted in `localStorage`. Includes a reset button.
 
 ### `ThemeToggle` (`components/theme-toggle/`)
 A fixed-position button in the top-right corner. Toggles between dark and light themes, persisted in `localStorage`. Defaults to the system preference.

@@ -1,7 +1,8 @@
 .gallery {
-  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  align-self: flex-start;
+  height: 100%;
   background: linear-gradient(180deg, var(--card), var(--glass));
   border-radius: 16px;
   padding: 20px;
@@ -37,9 +38,11 @@
 }
 
 .gallery-empty {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 30px 20px;
   color: var(--muted);
@@ -52,6 +55,13 @@
 .album {
   position: relative;
   min-height: 220px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.album-spread {
+  flex: 1;
 }
 
 .album-spread {
@@ -74,8 +84,10 @@
   border-radius: 10px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
   border: 1px solid var(--border);
-  padding: 14px;
+  padding: 10px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .album-side-inner {
@@ -83,8 +95,9 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   min-height: 170px;
+  flex: 1;
 }
 
 .album-divider {
@@ -343,9 +356,10 @@
   }
   .album-nav-btn { width: 32px; height: 32px; font-size: 18px; }
   .album-page-num { font-size: 12px; }
-  .polaroid-sm .polaroid-img-wrap { width: 80px !important; height: 60px !important; }
-  .polaroid-md .polaroid-img-wrap { width: 110px !important; height: 80px !important; }
-  .polaroid-lg .polaroid-img-wrap { width: 150px !important; height: 110px !important; }
+  .polaroid-xs .polaroid-img-wrap { width: 65px !important; height: 50px !important; }
+  .polaroid-sm .polaroid-img-wrap { width: 78px !important; height: 60px !important; }
+  .polaroid-md .polaroid-img-wrap { width: 100px !important; height: 74px !important; }
+  .polaroid-lg .polaroid-img-wrap { width: 130px !important; height: 95px !important; }
   .gallery-header { margin-bottom: 10px; }
   .lightbox-img {
     max-width: 96vw;

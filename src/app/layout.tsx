@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./components/theme-toggle/theme-toggle.css";
+import "./components/hydration-tracker/hydration-tracker.css";
 import "./components/forget-list/forget-list.css";
 import "./components/gallery/gallery.css";
 import "./components/flower/flower.css";
