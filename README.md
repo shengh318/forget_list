@@ -30,6 +30,7 @@ src/
       valentine-runner/       — Arrow-key collection game (Heart Dash Deluxe)
       birthday/               — Birthday celebration card with animated cake
       hydration-tracker/      — Water intake tracker with hourly reminders
+      mbta-tracker/           — Live MBTA subway predictions (Red/Orange/Blue/Green lines)
 ```
 
 ## Components
@@ -53,7 +54,10 @@ An arrow-key collection game ("Heart Dash Deluxe"). A bunny (🐰) moves on a 36
 A static server component. Displays a birthday card with confetti animation, a CSS cake with a flickering flame candle, and a personalized message.
 
 ### `HydrationTracker` (`components/hydration-tracker/`)
-An interactive water intake tracker. Log glasses of water (250ml each) toward a 2000ml daily goal, visualized with a CSS water bottle that fills up with an animated wave and floating bubbles. Sends browser `Notification` API reminders at a user-chosen interval (15 min to 4 hrs) — works on desktop and Android Chrome, even when in other apps. Customizable from the UI. State (water data, interval preference, last notified timestamp) persisted in `localStorage`. Includes a reset button.
+An interactive water intake tracker. Log glasses of water (250ml each) toward a 2000ml daily goal, visualized with a CSS water bottle that fills up with an animated wave and floating bubbles. Sends browser `Notification` API reminders at a user-chosen interval (15 min to 4 hrs) — works on desktop and Android Chrome, even when in other apps. Customizable from the UI. Features a "Test" button in the header to verify notifications, a countdown to the next reminder, and a reset button. State (water data, interval preference, last notified timestamp) persisted in `localStorage`.
+
+### `MbtaTracker` (`components/mbta-tracker/`)
+An interactive MBTA subway map showing the Red, Orange, Blue, and Green lines as an SVG schematic. Tap any station to open a popup with live predictions (up to 3 per direction), updated on open and via a manual ↻ refresh button. Predictions are fetched from the MBTA API v3. The popup shows route-colored direction headers with arrival times.
 
 ### `ThemeToggle` (`components/theme-toggle/`)
 A fixed-position button in the top-right corner. Toggles between dark and light themes, persisted in `localStorage`. Defaults to the system preference.
