@@ -13,24 +13,58 @@ A personal, romantic single-page web app for Sheng & Anne. Built with Next.js 16
 ## Project structure
 
 ```
-src/
-  lib/
-    getPhotos.ts              — Reads image files from public/photos/ (server-side)
-  app/
-    layout.tsx                — Root layout: fonts, theme toggle, global CSS imports
-    page.tsx                  — Home page (async server component): hero header + grid layout
-    globals.css               — CSS reset, theme variables, layout grid, hero, card, utilities
-    api/photos/route.ts       — JSON endpoint returning the list of photo paths
-    components/
-      theme-toggle/           — Dark/light mode toggle (localStorage-persisted)
-      forget-list/            — Packing checklist with add/toggle/remove/progress
-      gallery/                — Polaroid photo album with pagination + lightbox
-      flower/                 — 3D flip Valentine card with animated flower
-      valentine/              — Bunny-themed "Will you be my Valentine?" with canvas confetti
-      valentine-runner/       — Arrow-key collection game (Heart Dash Deluxe)
-      birthday/               — Birthday celebration card with animated cake
-      hydration-tracker/      — Water intake tracker with hourly reminders
-      mbta-tracker/           — Live MBTA subway predictions (Red/Orange/Blue/Green lines)
+forget_list/
+├── src/
+│   ├── lib/
+│   │   └── getPhotos.ts              # Reads public/photos/ via fs (server-side)
+│   └── app/
+│       ├── layout.tsx                # Root layout: fonts, theme toggle, global CSS
+│       ├── page.tsx                  # Home page: hero header + CSS grid layout
+│       ├── globals.css               # Reset, theme vars, grid, hero, cards
+│       ├── favicon.ico
+│       ├── api/photos/
+│       │   └── route.ts              # GET /api/photos — photo list endpoint
+│       └── components/
+│           ├── birthday/             # 🎂 Birthday card with cake & confetti
+│           │   ├── index.tsx
+│           │   └── birthday.css
+│           ├── flower/               # 🌸 3D flip card with animated flower
+│           │   ├── index.tsx
+│           │   └── flower.css
+│           ├── forget-list/          # 📋 Packing checklist
+│           │   ├── index.tsx
+│           │   └── forget-list.css
+│           ├── gallery/              # 📸 Polaroid photo album + lightbox
+│           │   ├── index.tsx
+│           │   └── gallery.css
+│           ├── hydration-tracker/    # 💧 Water intake tracker
+│           │   ├── index.tsx
+│           │   └── hydration-tracker.css
+│           ├── mbta-tracker/         # 🚇 Live MBTA subway map
+│           │   ├── index.tsx
+│           │   └── mbta-tracker.css
+│           ├── theme-toggle/         # 🌓 Dark/light mode toggle
+│           │   ├── index.tsx
+│           │   └── theme-toggle.css
+│           ├── valentine/            # 💌 Valentine's Day ask + confetti
+│           │   ├── index.tsx
+│           │   └── valentine.css
+│           └── valentine-runner/     # 🐰 Heart Dash Deluxe game
+│               ├── index.tsx
+│               └── valentine-runner.css
+├── public/
+│   ├── bear.png                     # Forget-list decoration
+│   ├── bunny.png                    # Forget-list decoration
+│   ├── photos/                      # Gallery images (user-added)
+│   └── (Next.js default assets)
+├── .github/workflows/
+│   └── nextjs.yml                   # GitHub Pages deploy
+├── eslint.config.mjs                # ESLint config
+├── next.config.ts                   # Next.js config (static export)
+├── postcss.config.mjs
+├── tsconfig.json
+├── package.json
+└── README.md
 ```
 
 ## Components
