@@ -136,7 +136,7 @@ export default function HydrationTracker() {
 
   const resetToday = useCallback(() => {
     setWaterData((prev) => ({ ...prev, totalMl: 0 }));
-    localStorage.setItem("hydrate-last-notified", "0");
+    localStorage.setItem("hydrate-last-notified", String(Date.now()));
   }, []);
 
   const percent = Math.min(Math.round((waterData.totalMl / GOAL_ML) * 100), 100);
@@ -144,9 +144,12 @@ export default function HydrationTracker() {
   const totalGlasses = GOAL_ML / GLASS_ML;
 
 function fmtCountdown(ms: number): string {
-  const m = Math.floor(ms / 60000);
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
   const s = Math.floor((ms % 60000) / 1000);
-  return `${m}:${String(s).padStart(2, "0")}`;
+  if (h > 0) return `${h}hr ${m}min ${s}sec`;
+  if (m > 0) return `${m}min ${s}sec`;
+  return `${s}sec`;
 }
 
   return (
