@@ -322,18 +322,14 @@ export default function MbtaTracker() {
 
   const renderSkeleton = () => (
     <div className="mbta-skeleton">
-      {Array.from({ length: 5 }).map((_, i) => (
+      {[70, 85, 75, 90, 65].map((w, i) => (
         <div
           key={i}
           className="mbta-skeleton-line"
-          style={{ width: `${60 + Math.random() * 30}%` }}
+          style={{ width: `${w}%` }}
         />
       ))}
-      <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="mbta-skeleton-station" />
-        ))}
-      </div>
+      <div className="mbta-skeleton-station" />
     </div>
   );
 

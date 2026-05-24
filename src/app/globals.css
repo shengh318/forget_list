@@ -346,8 +346,6 @@ body {
   .grid-valentine-ask .val-game,
   .grid-valentine-game .runner,
   .grid-birthday .birthday-card,
-  .grid-valentine-card .love-card,
-  .grid-valentine-card .love-card-shell,
   .grid-forgetlist.card {
     min-height: auto;
   }
