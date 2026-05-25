@@ -51,6 +51,18 @@
   border-color: rgba(var(--accent-rgb), 0.4);
 }
 
+.hydrate-notif-ddg-msg {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  background: rgba(255, 204, 0, 0.08);
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  color: var(--text-secondary);
+}
+
 /* --- Bottle --- */
 .hydrate-bottle-wrap {
   display: flex;

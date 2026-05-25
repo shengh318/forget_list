@@ -48,6 +48,7 @@ export default function HydrationTracker() {
   const [intervalMs, setIntervalMs] = useState(loadInterval);
   const [animating, setAnimating] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [isDuckDuckGo, setIsDuckDuckGo] = useState(false);
   const hydrated = useRef(false);
 
   useEffect(() => {
@@ -66,6 +67,11 @@ export default function HydrationTracker() {
     if ("Notification" in window) {
       setNotifStatus(Notification.permission);
     } else {
+      setNotifStatus("unsupported");
+    }
+    const ua = navigator.userAgent;
+    if (ua.includes("DuckDuckGo") && ua.includes("Android")) {
+      setIsDuckDuckGo(true);
       setNotifStatus("unsupported");
     }
   }, []);
@@ -188,7 +194,12 @@ function fmtCountdown(ms: number): string {
         <p className="subtitle">stay hydrated, ty ty ♡</p>
       </div>
 
-      {notifStatus !== "granted" && notifStatus !== "unsupported" && (
+      {isDuckDuckGo && (
+        <p className="hydrate-notif-ddg-msg">
+          ⚠️ DuckDuckGo browser doesn&apos;t support web notifications. Please use Chrome or Firefox for reminders.
+        </p>
+      )}
+      {!isDuckDuckGo && notifStatus !== "granted" && notifStatus !== "unsupported" && (
         <button className="hydrate-notif-request" onClick={requestPermission}>
           {notifStatus === "denied"
             ? "Notifications blocked (enable in browser settings)"
