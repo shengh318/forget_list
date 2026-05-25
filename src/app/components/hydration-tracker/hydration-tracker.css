@@ -1,3 +1,8 @@
+.grid-hydrate {
+  position: relative;
+  z-index: 1;
+}
+
 .hydrate-card {
   max-width: none !important;
   display: flex;
@@ -358,27 +363,63 @@
   white-space: nowrap;
 }
 
-.hydrate-interval select {
+.hydrate-interval-select {
+  position: relative;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 12px;
   border-radius: 10px;
   border: 1px solid var(--border-accent);
   background: var(--card);
   color: var(--text);
   font-size: 13px;
-  outline: none;
   cursor: pointer;
   transition: border-color 0.2s ease;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a89aa6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 30px;
+  user-select: none;
 }
 
-.hydrate-interval select:focus {
+.hydrate-interval-select:hover {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
+}
+
+.hydrate-arrow {
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+}
+
+.hydrate-interval-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border: 1px solid var(--border-accent);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.hydrate-interval-option {
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.hydrate-interval-option:hover {
+  background: rgba(var(--accent-rgb), 0.1);
+}
+
+.hydrate-interval-option.selected {
+  background: rgba(var(--accent-rgb), 0.15);
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .hydrate-test-btn {
@@ -473,9 +514,13 @@
   .hydrate-interval label {
     font-size: 11px;
   }
-  .hydrate-interval select {
+  .hydrate-interval-select {
     font-size: 12px;
     padding: 6px 10px;
-    padding-right: 26px;
+  }
+
+  .hydrate-interval-option {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }

@@ -49,7 +49,9 @@ export default function HydrationTracker() {
   const [animating, setAnimating] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [isDuckDuckGo, setIsDuckDuckGo] = useState(false);
+  const [intervalOpen, setIntervalOpen] = useState(false);
   const hydrated = useRef(false);
+  const intervalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try { localStorage.setItem("hydrate-interval", String(intervalMs)); } catch { /* ignore */ }
@@ -109,6 +111,17 @@ export default function HydrationTracker() {
     check();
     return () => clearInterval(tick);
   }, [notifStatus, intervalMs]);
+
+  // Close interval dropdown on outside click
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (intervalRef.current && !intervalRef.current.contains(e.target as Node)) {
+        setIntervalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   // Countdown ticker
   useEffect(() => {
@@ -254,13 +267,25 @@ function fmtCountdown(ms: number): string {
         </button>
       </div>
 
-      <div className="hydrate-interval">
+      <div className="hydrate-interval" ref={intervalRef}>
         <label>Remind me every:</label>
-        <select value={intervalMs} onChange={(e) => setIntervalMs(Number(e.target.value))}>
-          {INTERVAL_OPTIONS.map((opt) => (
-            <option key={opt.ms} value={opt.ms}>{opt.label}</option>
-          ))}
-        </select>
+        <div className="hydrate-interval-select" onClick={() => setIntervalOpen((v) => !v)}>
+          <span>{INTERVAL_OPTIONS.find((o) => o.ms === intervalMs)?.label}</span>
+          <span className="hydrate-arrow">▾</span>
+          {intervalOpen && (
+            <div className="hydrate-interval-options">
+              {INTERVAL_OPTIONS.map((opt) => (
+                <div
+                  key={opt.ms}
+                  className={`hydrate-interval-option${opt.ms === intervalMs ? " selected" : ""}`}
+                  onClick={(e) => { e.stopPropagation(); setIntervalMs(opt.ms); setIntervalOpen(false); }}
+                >
+                  {opt.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
